@@ -1,0 +1,2710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScamGuard 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1%;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 1%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            font-size: 1.2rem;
+            color: #667eea;
+            margin-bottom: 1%;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.85rem;
+            margin-bottom: 2%;
+        }
+        
+        .search {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            margin-bottom: 2%;
+            transition: all 0.3s;
+        }
+        
+        .search:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 1%;
+            margin-bottom: 2%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .content {
+            display: none;
+        }
+        
+        .content.active {
+            display: block;
+            animation: fadeIn 0.4s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .warning-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 2%;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+        }
+        
+        .card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 1.5%;
+            border-left: 4px solid #667eea;
+        }
+        
+        .card h3 {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 1%;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .icon {
+            font-size: 1.2rem;
+        }
+        
+        .card p, .card ul {
+            font-size: 0.85rem;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .card ul {
+            margin-left: 5%;
+            margin-top: 1%;
+        }
+        
+        .card li {
+            margin-bottom: 0.5%;
+        }
+        
+        .red-flag {
+            background: #fff3cd;
+            border-left-color: #ff6b6b;
+        }
+        
+        .safe-practice {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+        
+        .checklist {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 2%;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 1%;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1%;
+            margin-bottom: 2%;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+        
+        .tool-section {
+            margin-bottom: 2%;
+        }
+        
+        .tool-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 1%;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .result {
+            margin-top: 1%;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 3%;
+            padding-top: 2%;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ ScamGuard 2026</h1>
+        <div class="subtitle">Tech VA Freelancer Protection Guide</div>
+        
+        <input type="text" class="search" placeholder="Search scam tactics, red flags, tips..." id="searchInput">
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('overview')">Overview</button>
+            <button class="tab" onclick="showTab('ph-guide')">🇵🇭 PH Guide</button>
+            <button class="tab" onclick="showTab('ai-scams')">🤖 AI Scams</button>
+            <button class="tab" onclick="showTab('crypto-scams')">💰 Crypto Scams</button>
+            <button class="tab" onclick="showTab('platform-scams')">🎭 Platform Tricks</button>
+            <button class="tab" onclick="showTab('data-scams')">🕵️ Data Theft</button>
+            <button class="tab" onclick="showTab('techva-scams')">⚙️ Tech VA Scams</button>
+            <button class="tab" onclick="showTab('redflags')">Red Flags</button>
+            <button class="tab" onclick="showTab('howto')">How-To Guide</button>
+            <button class="tab" onclick="showTab('tools')">Verification Tools</button>
+            <button class="tab" onclick="showTab('checklist')">Safety Checklist</button>
+        </div>
+        
+        <div id="overview" class="content active">
+            <div class="warning-card">
+                <h3 style="margin-bottom: 1%;">⚠️ 2026 Scam Alert</h3>
+                <p style="font-size: 0.85rem;">Online job scams targeting tech VAs increased 340% in 2025. Stay vigilant with AI-powered scams, deepfake interviews, and crypto payment schemes.</p>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="stat-number">68%</span>
+                    <span class="stat-label">Scams use fake urgency</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">$2.4B</span>
+                    <span class="stat-label">Lost to job scams (2025)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">89%</span>
+                    <span class="stat-label">Ask for upfront payment</span>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">🎯</span> Common 2026 Scam Types</h3>
+                <ul>
+                    <li><strong>AI Deepfake Interviews:</strong> Scammers use AI to impersonate real companies in video calls</li>
+                    <li><strong>Equipment Purchase Scams:</strong> Send fake check to buy "required" equipment from their "vendor"</li>
+                    <li><strong>Training Fee Scams:</strong> Charge for mandatory training that doesn't exist</li>
+                    <li><strong>Crypto Payment Schemes:</strong> Promise payment in crypto that never arrives</li>
+                    <li><strong>Data Harvesting:</strong> Collect personal info under guise of hiring process</li>
+                </ul>
+            </div>
+            
+            <div class="card safe-practice">
+                <h3><span class="icon">✅</span> Quick Safety Rules</h3>
+                <ul>
+                    <li>Never pay to get a job</li>
+                    <li>Verify company through multiple sources</li>
+                    <li>Use escrow services for payments</li>
+                    <li>Trust your instincts on urgency</li>
+                    <li>Keep all communications documented</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="ph-guide" class="content">
+            <div class="warning-card">
+                <h3 style="margin-bottom: 1%;">🇵🇭 For Filipino Freelancers</h3>
+                <p style="font-size: 0.85rem;">Special guide for Philippine-based beginners. Know your rights: Job placement fees are ILLEGAL in the Philippines under DOLE rules!</p>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🚨</span> PH-Specific Scams to Avoid</h3>
+                <ul>
+                    <li><strong>Remittance Scams:</strong> Fake GCash/PayMaya/bank transfer screenshots - always verify in your actual account</li>
+                    <li><strong>Training Center Scams:</strong> Pay ₱5,000-20,000 for "certifications" that guarantee job (fake!)</li>
+                    <li><strong>Job Placement Fees:</strong> Any fee to get hired is ILLEGAL under PH labor law (DOLE)</li>
+                    <li><strong>Work-from-Home Packages:</strong> "Buy our ₱15,000 starter kit to begin" - total scam</li>
+                    <li><strong>Facebook Group Scams:</strong> "Homebased Jobs PH" groups full of fake recruiters</li>
+                    <li><strong>Load/Prepaid Scams:</strong> "Send ₱500 load to verify you're serious"</li>
+                    <li><strong>NBI/Medical Fee Scams:</strong> Asking you to pay for clearance before starting</li>
+                    <li><strong>"Sir/Ma'am" Urgency:</strong> "Sir needs you start Monday, send requirements now"</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">📚</span> Essential Freelance Terminology</h3>
+                <ul>
+                    <li><strong>BIR:</strong> Bureau of Internal Revenue - you need to register as freelancer for taxes</li>
+                    <li><strong>Form 2303:</strong> Certificate of Registration for freelancers (get this from BIR)</li>
+                    <li><strong>DTI/SEC:</strong> Check if PH company is legit (dti.gov.ph / sec.gov.ph)</li>
+                    <li><strong>Escrow:</strong> Protected payment system - money held safely until work is done. Client pays platform, platform releases to you after delivery</li>
+                    <li><strong>NDA:</strong> Non-Disclosure Agreement - you promise not to share client secrets/info. Normal for most jobs</li>
+                    <li><strong>SOW:</strong> Scope of Work - exact tasks you'll do (always get this in writing!)</li>
+                    <li><strong>Milestone Payments:</strong> Getting paid in chunks as you complete parts (Example: 25% start, 50% middle, 25% end)</li>
+                    <li><strong>Retainer:</strong> Monthly fee for ongoing work - client pays you ₱X every month to be available (most stable income!)</li>
+                    <li><strong>Time Tracking:</strong> Apps that prove your work hours (Hubstaff, Time Doctor). Takes screenshots/tracks activity</li>
+                    <li><strong>Invoice:</strong> Official bill you send to get paid - like a receipt but you create it</li>
+                    <li><strong>Net 30/Net 60:</strong> Payment after 30 or 60 days from invoice (AVOID as beginner - too long to wait!)</li>
+                    <li><strong>Platform Fee:</strong> Upwork takes 10-20%, Fiverr takes 20% of your earnings. Factor this into your rate!</li>
+                    <li><strong>Fixed-Price Project:</strong> One-time job with set price (₱5,000 for logo design)</li>
+                    <li><strong>Hourly Contract:</strong> Get paid per hour worked (₱250/hour tracked)</li>
+                    <li><strong>Long-term Contract:</strong> Ongoing work, usually monthly (most stable for beginners)</li>
+                    <li><strong>Gig:</strong> Short one-time task (1-5 days work)</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">🔄</span> Contracts vs Gigs - What's the Difference?</h3>
+                <p><strong>Long-term Contract (Recommended for Beginners):</strong></p>
+                <ul>
+                    <li>Monthly ongoing work - more stable income</li>
+                    <li>Build relationship with one client</li>
+                    <li>Retainer fee (₱20k-40k/month guaranteed)</li>
+                    <li>Example: Social media manager for 6 months</li>
+                    <li>Pros: Predictable income, build portfolio with one client</li>
+                    <li>Cons: Less variety, locked to one client</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>Gigs/One-time Projects:</strong></p>
+                <ul>
+                    <li>Short 1-5 day tasks</li>
+                    <li>Fixed price per project</li>
+                    <li>Example: "Create 5 Instagram posts - ₱2,500"</li>
+                    <li>Pros: Variety, can work with multiple clients</li>
+                    <li>Cons: Unstable income, always hunting for next gig</li>
+                </ul>
+                <p style="margin-top: 1%; color: #27ae60;"><strong>💡 Tip:</strong> Start with gigs to build portfolio, then transition to long-term contracts for stability!</p>
+            </div>
+            
+            <div class="card safe-practice">
+                <h3><span class="icon">🎨</span> Portfolio Protection Tips</h3>
+                <ul>
+                    <li><strong>Watermark samples:</strong> Add small "SAMPLE" text or your name on portfolio images</li>
+                    <li><strong>Low-res only:</strong> Share 800px width max, not full 4K resolution</li>
+                    <li><strong>PDF protection:</strong> Set "no copy" on PDF portfolio</li>
+                    <li><strong>Screenshots not originals:</strong> Never send original PSD/AI files as "samples"</li>
+                    <li><strong>Partial work:</strong> Show 50% of design, not complete project</li>
+                    <li><strong>Copyright notice:</strong> Add "© 2026 Your Name - All Rights Reserved"</li>
+                    <li><strong>Google reverse search:</strong> Check monthly if someone stole your work</li>
+                    <li><strong>NDA respect:</strong> Don't showcase client work if NDA forbids it (ask first!)</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">⏰</span> Understanding Advance Payments</h3>
+                <p><strong>Safe advance payment structure:</strong></p>
+                <ul>
+                    <li><strong>20-30% advance:</strong> Normal and safe for fixed-price projects</li>
+                    <li><strong>Example:</strong> ₱10,000 project = ₱3,000 advance, ₱7,000 on completion</li>
+                    <li><strong>50% advance:</strong> OK for established clients or large projects (₱50k+)</li>
+                    <li><strong>Use escrow:</strong> Let platform hold the full amount, release as you complete</li>
+                </ul>
+                <p style="margin-top: 1%; color: #d63031;"><strong>🚩 DANGER SIGNS:</strong></p>
+                <ul>
+                    <li>100% advance from new client (can be scam to get your info, then chargeback)</li>
+                    <li>Advance via check/bank transfer from unknown client (can bounce)</li>
+                    <li>They insist on advance but won't use escrow</li>
+                    <li>"Send me your bank details for advance" before any contract = RED FLAG</li>
+                </ul>
+            </div>
+            
+            <div class="card safe-practice">
+                <h3><span class="icon">✅</span> Safe Platforms for PH Freelancers</h3>
+                <ul>
+                    <li><strong>Upwork:</strong> Best for beginners, escrow protection, global clients</li>
+                    <li><strong>OnlineJobs.ph:</strong> PH-focused, direct hire, no fees but less protection</li>
+                    <li><strong>Fiverr:</strong> Good for services/gigs, payment protection</li>
+                    <li><strong>Freelancer.com:</strong> Escrow available, competitive</li>
+                    <li><strong>PeoplePerHour:</strong> UK/EU clients, safe payments</li>
+                    <li><strong>LinkedIn:</strong> Professional networking, direct clients (verify carefully!)</li>
+                    <li><strong>AVOID:</strong> Random Facebook groups, Telegram channels, unknown websites</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">💰</span> Realistic PH Freelance Rates (2026)</h3>
+                <p><strong>Beginner Rates (0-6 months experience):</strong></p>
+                <ul>
+                    <li>Data Entry: ₱150-250/hour or ₱20,000-35,000/month</li>
+                    <li>Social Media VA: ₱200-350/hour or ₱25,000-45,000/month</li>
+                    <li>Customer Service: ₱180-300/hour or ₱22,000-40,000/month</li>
+                    <li>Basic Graphic Design: ₱250-400/hour</li>
+                    <li>Content Writing: ₱2-5 per word or ₱300-500/hour</li>
+                    <li>Email Management: ₱200-300/hour or ₱25,000-40,000/month</li>
+                    <li>Basic Video Editing: ₱300-500/hour</li>
+                    <li>Transcription: ₱50-100 per audio minute</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>Intermediate Rates (6 months - 2 years):</strong></p>
+                <ul>
+                    <li>Advanced VA: ₱350-600/hour or ₱45,000-80,000/month</li>
+                    <li>Professional Graphic Design: ₱500-800/hour</li>
+                    <li>SEO Specialist: ₱400-700/hour</li>
+                    <li>Web Development: ₱600-1,200/hour</li>
+                </ul>
+                <p style="margin-top: 1%; color: #d63031;"><strong>🚩 RED FLAG:</strong> If rate is ₱50,000+ for basic data entry = SCAM. Real data entry tops at ₱35k/month for beginners.</p>
+                <p style="margin-top: 1%; color: #27ae60;"><strong>💡 Rate Setting Tips:</strong></p>
+                <ul>
+                    <li>Start low to build portfolio (₱150-200/hour OK for first 3-5 clients)</li>
+                    <li>Increase 20-30% every 3-6 months as you gain skills</li>
+                    <li>Factor in platform fees: If you want ₱250/hour net, charge ₱310/hour (20% Upwork fee)</li>
+                    <li>Night shift? Add 10-30% premium for PH night hours</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">📱</span> Facebook "Homebased Jobs PH" Red Flags</h3>
+                <p><strong>Danger signs in FB job groups:</strong></p>
+                <ul>
+                    <li><strong>Same post everywhere:</strong> Copy-pasted in 10+ groups = scam</li>
+                    <li><strong>New account recruiter:</strong> Profile created last month, no friends</li>
+                    <li><strong>Comments disabled:</strong> Hiding negative feedback from victims</li>
+                    <li><strong>Emoji overload:</strong> "💰💰 EARN 50K 💸💸 NO EXPERIENCE 🎉🎉"</li>
+                    <li><strong>"PM sent":</strong> Everyone in comments says "PM sent" but no details = fake engagement</li>
+                    <li><strong>Apply via Telegram/WhatsApp:</strong> Legit companies use email/platforms</li>
+                    <li><strong>Urgent "slots filling up":</strong> Creating fake scarcity</li>
+                    <li><strong>No company name:</strong> Just says "international company" or "US client"</li>
+                    <li><strong>Stock photos:</strong> Office photos from Google images</li>
+                    <li><strong>Generic job description:</strong> Doesn't specify what you'll actually do</li>
+                </ul>
+                <p style="margin-top: 1%; color: #27ae60;"><strong>✅ SAFER:</strong> Use Upwork, OnlineJobs.ph, Fiverr instead of Facebook groups. If using FB, verify company on Google/LinkedIn first!</p>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">📋</span> BIR Form 2303 - Tax Registration Guide</h3>
+                <p><strong>When do you need to register?</strong></p>
+                <ul>
+                    <li>When you earn ₱250,000+ per year from freelancing</li>
+                    <li>Before that, you're still required but penalties are minimal</li>
+                    <li>Best practice: Register once you get your first client</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>What is Form 2303?</strong></p>
+                <ul>
+                    <li>Certificate of Registration for self-employed/freelancers</li>
+                    <li>Proves you're a legit business for tax purposes</li>
+                    <li>Allows you to issue Official Receipts (OR)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>How to register (Simple steps):</strong></p>
+                <ul>
+                    <li><strong>Step 1:</strong> Go to your RDO (Revenue District Office) based on your address</li>
+                    <li><strong>Step 2:</strong> Bring: Valid ID, Barangay Clearance, Cedula, Proof of Address</li>
+                    <li><strong>Step 3:</strong> Fill out BIR Form 1901 (for first-time registration)</li>
+                    <li><strong>Step 4:</strong> Pay ₱500 annual registration fee + documentary stamp</li>
+                    <li><strong>Step 5:</strong> Receive your TIN (Tax Identification Number) and Certificate</li>
+                    <li><strong>Step 6:</strong> Register books of accounts (₱200-300)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>Tax obligations after registration:</strong></p>
+                <ul>
+                    <li><strong>Quarterly:</strong> File 1701Q (Percentage Tax) every 3 months - even if no income!</li>
+                    <li><strong>Annual:</strong> File 1701 (Income Tax Return) by April 15</li>
+                    <li><strong>8% Percentage Tax:</strong> If earning below ₱3M/year (most freelancers)</li>
+                    <li><strong>OR Online filing:</strong> Use eBIRForms app or file in person</li>
+                </ul>
+                <p style="margin-top: 1%; color: #f39c12;"><strong>⚠️ Don't panic!</strong> Many beginners delay registration. Just register when you're ready - BIR penalties are negotiable for small freelancers.</p>
+            </div>
+            
+            <div class="card safe-practice">
+                <h3><span class="icon">💳</span> Payment Platform Comparison (PH 2026)</h3>
+                <table style="width: 100%; margin-top: 1%; font-size: 0.85rem; border-collapse: collapse;">
+                    <tr style="background: #667eea; color: white;">
+                        <th style="padding: 8px; text-align: left;">Platform</th>
+                        <th style="padding: 8px;">Fees</th>
+                        <th style="padding: 8px;">Speed</th>
+                        <th style="padding: 8px;">Best For</th>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 8px;"><strong>PayPal</strong></td>
+                        <td style="padding: 8px;">₱50 + 3-4% FX</td>
+                        <td style="padding: 8px;">3-5 days</td>
+                        <td style="padding: 8px;">Most accepted</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px;"><strong>Wise</strong></td>
+                        <td style="padding: 8px;">0.5-1% FX only</td>
+                        <td style="padding: 8px;">1-2 days</td>
+                        <td style="padding: 8px;">Best rates</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 8px;"><strong>Payoneer</strong></td>
+                        <td style="padding: 8px;">1-3% FX</td>
+                        <td style="padding: 8px;">2-3 days</td>
+                        <td style="padding: 8px;">Amazon, big platforms</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 8px;"><strong>Bank Transfer</strong></td>
+                        <td style="padding: 8px;">Varies</td>
+                        <td style="padding: 8px;">1-7 days</td>
+                        <td style="padding: 8px;">Verified clients only</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 8px;"><strong>GCash/Maya</strong></td>
+                        <td style="padding: 8px;">Low/Free</td>
+                        <td style="padding: 8px;">Instant</td>
+                        <td style="padding: 8px;">PH clients only</td>
+                    </tr>
+                </table>
+                <p style="margin-top: 1%;"><strong>💡 Recommended setup for beginners:</strong></p>
+                <ul>
+                    <li><strong>Primary:</strong> PayPal (most clients use this)</li>
+                    <li><strong>Backup:</strong> Wise (better rates for bigger amounts)</li>
+                    <li><strong>Local:</strong> GCash for verified PH clients only</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">📝</span> How to Invoice Properly (Beginner-Friendly)</h3>
+                <p><strong>Your invoice must include:</strong></p>
+                <ul>
+                    <li><strong>Header:</strong> "INVOICE" in big letters at top</li>
+                    <li><strong>Your Info:</strong> Full name, address, email, phone</li>
+                    <li><strong>Client Info:</strong> Client name, company, address</li>
+                    <li><strong>Invoice Number:</strong> INV-001, INV-002 (track in order)</li>
+                    <li><strong>Date Issued:</strong> When you sent the invoice</li>
+                    <li><strong>Due Date:</strong> When payment is expected (Net 15 = 15 days)</li>
+                    <li><strong>Description:</strong> "Social Media Management - January 2026" or "Logo Design for ABC Corp"</li>
+                    <li><strong>Quantity & Rate:</strong> "40 hours × ₱300/hour" or "1 logo × ₱5,000"</li>
+                    <li><strong>Subtotal:</strong> Total before any deductions</li>
+                    <li><strong>Total Due:</strong> Final amount in BOLD</li>
+                    <li><strong>Payment Info:</strong> PayPal email or bank details</li>
+                    <li><strong>Notes:</strong> "Payment due within 15 days" or "Thank you for your business!"</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>Free invoicing tools:</strong></p>
+                <ul>
+                    <li><strong>Wave:</strong> waveapps.com - Free, professional invoices</li>
+                    <li><strong>Invoice Generator:</strong> invoice-generator.com - Quick & simple</li>
+                    <li><strong>Google Docs:</strong> Search "invoice template" in templates</li>
+                    <li><strong>Canva:</strong> Free invoice designs (looks more professional)</li>
+                </ul>
+                <p style="margin-top: 1%; color: #27ae60;"><strong>💡 Pro Tip:</strong> Send invoice immediately after completing work. Don't wait! The faster you invoice, the faster you get paid.</p>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">🌏</span> Dealing with Timezone Differences</h3>
+                <p><strong>Philippines is GMT+8 (understanding time zones):</strong></p>
+                <ul>
+                    <li><strong>US East Coast (EST):</strong> PH is 13 hours ahead (1pm PH = 12am EST)</li>
+                    <li><strong>US West Coast (PST):</strong> PH is 16 hours ahead (1pm PH = 9pm PST previous day)</li>
+                    <li><strong>UK (GMT):</strong> PH is 8 hours ahead (1pm PH = 5am GMT)</li>
+                    <li><strong>Australia (AEST):</strong> PH is 2 hours behind (1pm PH = 3pm AEST)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>Essential tools:</strong></p>
+                <ul>
+                    <li><strong>WorldTimeBuddy.com:</strong> Best for comparing multiple timezones</li>
+                    <li><strong>Every Time Zone:</strong> everytimezone.com - See world at a glance</li>
+                    <li><strong>Google Calendar:</strong> Set to client's timezone for meetings</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>Handling timezone challenges:</strong></p>
+                <ul>
+                    <li><strong>Clarify ALWAYS:</strong> "9am-5pm - in which timezone?" before accepting</li>
+                    <li><strong>Set boundaries:</strong> Don't accept 3am PH calls unless night differential pay (+20-30%)</li>
+                    <li><strong>Async communication:</strong> Email/Slack > live calls for big time differences</li>
+                    <li><strong>Overlap hours:</strong> Find 2-3 hour overlap for urgent matters (e.g., 9pm-11pm PH = 9am-11am EST)</li>
+                    <li><strong>Buffer time:</strong> If client says "5pm deadline," ask "5pm in what timezone?"</li>
+                </ul>
+                <p style="margin-top: 1%; color: #f39c12;"><strong>⚠️ Watch out:</strong> Some clients expect you to work their hours (US day = PH night). Negotiate premium pay or politely decline!</p>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">⏰</span> When to Ask for Advance Payment (And How Much)</h3>
+                <p><strong>Safe advance payment guidelines:</strong></p>
+                <ul>
+                    <li><strong>20-30% advance:</strong> Standard and safe for fixed-price projects over ₱10,000</li>
+                    <li><strong>Example:</strong> ₱20,000 project = ₱5,000 (25%) advance, ₱15,000 on delivery</li>
+                    <li><strong>Small projects (under ₱5,000):</strong> Skip advance, use escrow or payment on delivery</li>
+                    <li><strong>Large projects (₱50,000+):</strong> 30-50% advance is reasonable</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>When NOT to accept 100% advance:</strong></p>
+                <ul>
+                    <li>New client you haven't verified yet</li>
+                    <li>Payment method is check or unfamiliar platform</li>
+                    <li>Client insists but won't use escrow</li>
+                    <li>Your gut says something is off</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>Safest payment structure (beginner-friendly):</strong></p>
+                <ul>
+                    <li><strong>Option 1 - Escrow:</strong> Client funds full amount in Upwork/Fiverr escrow, you get paid after delivery</li>
+                    <li><strong>Option 2 - Milestones:</strong> 30% start → 40% midpoint → 30% completion</li>
+                    <li><strong>Option 3 - Weekly:</strong> For hourly contracts, get paid every Friday via platform</li>
+                </ul>
+                <p style="margin-top: 1%; color: #d63031;"><strong>🚩 NEVER accept advance if:</strong></p>
+                <ul>
+                    <li>They ask for your bank details before signing contract</li>
+                    <li>Payment is via check from someone you don't know (can bounce!)</li>
+                    <li>They send "overpayment" and ask you to refund difference (classic scam)</li>
+                    <li>100% advance from brand new client with no reviews/history</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">💳</span> Payment Methods for Filipinos</h3>
+                <ul>
+                    <li><strong>PayPal:</strong> Most common, but has fees (₱50 withdrawal fee + exchange rate loss)</li>
+                    <li><strong>Wise (TransferWise):</strong> Better exchange rates, lower fees, direct to PH bank</li>
+                    <li><strong>Payoneer:</strong> Good for Amazon/international clients, lower fees than PayPal</li>
+                    <li><strong>Direct Bank Transfer:</strong> Only use with verified clients (check carefully!)</li>
+                    <li><strong>GCash/PayMaya:</strong> Only for verified PH clients - easy to fake!</li>
+                    <li><strong>AVOID:</strong> Western Union for new clients, cryptocurrency from unknowns</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>Tip:</strong> Always wait for money to actually appear in YOUR account before starting work. Screenshots can be faked!</p>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">⚠️</span> Too-Good-To-Be-True PH Job Posts</h3>
+                <ul>
+                    <li>"₱50,000/month for simple typing job" - Real rate is ₱20k-30k</li>
+                    <li>"No experience needed, earn ₱100k/month" - Unrealistic</li>
+                    <li>"Work 2 hours/day, earn ₱40k/month" - Scam promise</li>
+                    <li>"Guaranteed daily income ₱2,000" - No legit job guarantees this</li>
+                    <li>Posted in multiple FB groups word-for-word - Copy-paste scam</li>
+                    <li>Uses excessive emojis: "💰💰💰 HIRING NOW!!! 💸💸💸"</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">📋</span> BIR Registration for Freelancers</h3>
+                <p><strong>When earning ₱250,000+/year, you need:</strong></p>
+                <ul>
+                    <li><strong>Form 2303:</strong> Certificate of Registration (Self-Employed)</li>
+                    <li><strong>Books of Accounts:</strong> Record income/expenses</li>
+                    <li><strong>OR/Receipts:</strong> Official receipts for clients</li>
+                    <li><strong>Quarterly Tax:</strong> File every 3 months (even if no income)</li>
+                    <li><strong>Annual ITR:</strong> Income Tax Return by April 15</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>Where:</strong> Visit your RDO (Revenue District Office) or BIR website (bir.gov.ph)</p>
+            </div>
+            
+            <div class="card safe-practice">
+                <h3><span class="icon">🛡️</span> Safety for Beginners - Complete Protection Guide</h3>
+                <p><strong>🆔 Never Share Government IDs Upfront:</strong></p>
+                <ul>
+                    <li><strong>NEVER send:</strong> Passport, Driver's License, National ID, SSS, PhilHealth, Postal ID before written job offer</li>
+                    <li><strong>Why:</strong> Can be used for identity theft, fake accounts, loan applications in your name</li>
+                    <li><strong>When it's OK:</strong> ONLY after receiving signed contract AND first payment cleared</li>
+                    <li><strong>Safe sharing:</strong> Watermark "FOR [COMPANY NAME] ONLY - NOT VALID FOR OTHER USE" across ID photo</li>
+                    <li><strong>What to share instead:</strong> LinkedIn profile, portfolio, resume (no ID numbers!)</li>
+                </ul>
+                
+                <p style="margin-top: 1%;"><strong>🚩 Red Flags - They're Too Good to Be True:</strong></p>
+                <ul>
+                    <li><strong>Rate too high:</strong> ₱50,000/month for simple data entry (real rate: ₱20k-35k)</li>
+                    <li><strong>Instant hire:</strong> "You're hired!" without interview or skill test</li>
+                    <li><strong>Too easy:</strong> "Just copy-paste 2 hours daily, earn ₱40k/month"</li>
+                    <li><strong>Guaranteed income:</strong> No legit job guarantees ₱2,000/day every day</li>
+                    <li><strong>No experience needed:</strong> For high-paying roles (₱50k+) = suspicious</li>
+                </ul>
+                
+                <p style="margin-top: 1%;"><strong>🎨 Portfolio Theft Protection:</strong></p>
+                <ul>
+                    <li><strong>Watermark everything:</strong> Add "SAMPLE - [Your Name]" text overlay on images</li>
+                    <li><strong>Low resolution:</strong> Share 800px max width, never full 4K/print quality</li>
+                    <li><strong>PDF protection:</strong> When sending PDF portfolio, set "no copy/no print" in settings</li>
+                    <li><strong>Partial work only:</strong> Show 50% of design, blur sensitive parts, or crop strategically</li>
+                    <li><strong>No source files:</strong> NEVER send PSD, AI, INDD, or editable files as "samples"</li>
+                    <li><strong>Copyright notice:</strong> Add "© 2026 [Your Name] - All Rights Reserved" to footer</li>
+                    <li><strong>Track your work:</strong> Monthly Google reverse image search to catch theft</li>
+                    <li><strong>NDA compliance:</strong> If client NDA forbids showcasing, ask written permission first</li>
+                    <li><strong>Fake projects scam:</strong> If "client" asks for full project as "test" - RED FLAG (free work scam)</li>
+                </ul>
+                
+                <p style="margin-top: 1%;"><strong>🔐 Account & Password Security:</strong></p>
+                <ul>
+                    <li><strong>Unique passwords:</strong> Different password for each platform (Upwork, Fiverr, email)</li>
+                    <li><strong>Password manager:</strong> Use Bitwarden (free) or LastPass to manage passwords</li>
+                    <li><strong>2FA everywhere:</strong> Enable two-factor authentication on all work accounts</li>
+                    <li><strong>Never share access:</strong> Client should NEVER ask for your platform password</li>
+                    <li><strong>Separate email:</strong> Work email different from personal (yourname.work@gmail.com)</li>
+                    <li><strong>Client account access:</strong> If managing social media, they should add you as admin, NOT give password</li>
+                </ul>
+                
+                <p style="margin-top: 1%;"><strong>💳 Financial Information Safety:</strong></p>
+                <ul>
+                    <li><strong>Bank details timing:</strong> Only share AFTER written contract signed</li>
+                    <li><strong>Use business account:</strong> Separate bank account for freelance (not your savings!)</li>
+                    <li><strong>Credit monitoring:</strong> Check credit report quarterly for identity theft (creditinfo.com.ph)</li>
+                    <li><strong>SSS/TIN protection:</strong> Only provide when legally required (BIR registration, payroll setup)</li>
+                    <li><strong>PayPal email only:</strong> Don't need to share bank details if using PayPal/Wise</li>
+                </ul>
+                
+                <p style="margin-top: 1%;"><strong>📧 Email & Communication Safety:</strong></p>
+                <ul>
+                    <li><strong>Verify sender:</strong> Check email domain matches company website exactly</li>
+                    <li><strong>Phishing red flags:</strong> Misspelled domain (microsft.com vs microsoft.com)</li>
+                    <li><strong>Don't click links:</strong> In suspicious emails - go directly to website instead</li>
+                    <li><strong>Professional email:</strong> firstname.lastname@gmail.com, not cutiepie123@yahoo.com</li>
+                    <li><strong>Document everything:</strong> Keep all client communication in writing (email/platform messages)</li>
+                </ul>
+                
+                <p style="margin-top: 1%;"><strong>🎯 Beware of "Sir/Ma'am Needs You Start Monday" Scams:</strong></p>
+                <ul>
+                    <li><strong>Urgency pressure:</strong> "Need someone ASAP, start tomorrow" = rushing you to skip verification</li>
+                    <li><strong>Filipino scammer tactic:</strong> Uses "Sir/Ma'am" to seem legit to PH workers</li>
+                    <li><strong>WhatsApp/Telegram only:</strong> Won't communicate via email or proper platform</li>
+                    <li><strong>Send requirements fast:</strong> "Send ID, resume, clearances NOW" before interview</li>
+                    <li><strong>What to do:</strong> Slow down! Real companies can wait 2-3 days for proper verification</li>
+                </ul>
+                
+                <p style="margin-top: 1%;"><strong>❌ NEVER, EVER Do These:</strong></p>
+                <ul>
+                    <li><strong>Pay to get hired:</strong> Training fees, placement fees, starter kits = ALL SCAMS</li>
+                    <li><strong>Buy equipment from them:</strong> "Buy laptop from our vendor with check we send" = scam</li>
+                    <li><strong>Send load/prepaid:</strong> "Send ₱500 load to prove you're serious" = scam</li>
+                    <li><strong>Cash checks for client:</strong> "Deposit this check, keep 10%, send us 90%" = money laundering scam</li>
+                    <li><strong>Accept overpayment:</strong> "Oops we paid ₱20k instead of ₱10k, refund ₱10k" = check will bounce</li>
+                    <li><strong>Work without contract:</strong> Always get terms in writing before starting</li>
+                    <li><strong>Share OTP codes:</strong> Bank/email OTPs are for YOU only, never share</li>
+                </ul>
+                
+                <p style="margin-top: 1%;"><strong>✅ Smart Beginner Practices:</strong></p>
+                <ul>
+                    <li><strong>Start small:</strong> First project = small test (₱2k-5k) to verify client is real</li>
+                    <li><strong>Use platforms:</strong> Upwork/Fiverr for first 5-10 clients (protection worth the fees!)</li>
+                    <li><strong>Trust your gut:</strong> If something feels off, it probably is - walk away</li>
+                    <li><strong>Research client:</strong> Google company + "scam", check LinkedIn, verify website</li>
+                    <li><strong>Ask questions:</strong> Legit clients welcome questions about process/payment/scope</li>
+                    <li><strong>Save everything:</strong> Screenshots of job posts, contracts, payments, conversations</li>
+                    <li><strong>Join communities:</strong> Filipino Freelancers FB groups (verified ones) for scam warnings</li>
+                    <li><strong>Emergency fund:</strong> Save 3 months expenses - freelance income is unpredictable!</li>
+                </ul>
+                
+                <p style="margin-top: 1%; color: #27ae60;"><strong>💡 Golden Rule for Beginners:</strong></p>
+                <p style="color: #27ae60;">If a job requires you to SPEND money before you EARN money = 🚩 SCAM! Real jobs pay YOU, not the other way around.</p>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">📝</span> How to Invoice Properly</h3>
+                <p><strong>Your invoice should include:</strong></p>
+                <ul>
+                    <li>Your full name and address</li>
+                    <li>Client name and address</li>
+                    <li>Invoice number (INV-001, INV-002, etc.)</li>
+                    <li>Date issued</li>
+                    <li>Description of work done</li>
+                    <li>Hours worked or project rate</li>
+                    <li>Total amount (in USD or PHP)</li>
+                    <li>Payment method (PayPal email, bank details)</li>
+                    <li>Payment due date</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>Tip:</strong> Use free tools like Wave, Invoice Generator, or Google Docs templates</p>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">🌏</span> Dealing with Timezone Differences</h3>
+                <ul>
+                    <li><strong>PH is GMT+8:</strong> 12-16 hours ahead of US clients</li>
+                    <li><strong>Clarify working hours:</strong> "9am-5pm whose timezone?"</li>
+                    <li><strong>Use WorldTimeBuddy.com:</strong> Compare timezones easily</li>
+                    <li><strong>Set boundaries:</strong> Don't accept 3am PH time meetings unless premium pay</li>
+                    <li><strong>Async work:</strong> Email/Slack better than live calls for time differences</li>
+                    <li><strong>Night differential:</strong> Ask for 10-30% more if working PH night shift</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🔴</span> When to Walk Away</h3>
+                <p><strong>Run if client:</strong></p>
+                <ul>
+                    <li>Refuses to use escrow/platform and insists on direct payment only</li>
+                    <li>Asks for work "sample" that's actually full project (free work scam)</li>
+                    <li>Changes scope repeatedly without adjusting payment</li>
+                    <li>Delays payment repeatedly with excuses</li>
+                    <li>Asks you to lie (fake reviews, spam, unethical work)</li>
+                    <li>Disrespects you or uses abusive language</li>
+                    <li>Asks for your password/access to personal accounts</li>
+                    <li>Won't sign contract or put terms in writing</li>
+                </ul>
+            </div>
+            
+            <div class="card safe-practice">
+                <h3><span class="icon">💡</span> Pro Tips for PH Beginners</h3>
+                <ul>
+                    <li><strong>Build portfolio first:</strong> Do 2-3 sample projects (even unpaid) for experience</li>
+                    <li><strong>Start with hourly:</strong> Easier than fixed-price when starting out</li>
+                    <li><strong>Underpromise, overdeliver:</strong> Better to surprise client positively</li>
+                    <li><strong>Save client testimonials:</strong> Screenshot good feedback for portfolio</li>
+                    <li><strong>Learn one skill deep:</strong> Better to master one thing than be mediocre at many</li>
+                    <li><strong>Join legit communities:</strong> Filipino Freelancers (verified FB groups), Reddit r/phcareers</li>
+                    <li><strong>Invest in tools:</strong> Good internet, backup laptop, UPS for brownouts</li>
+                    <li><strong>Emergency fund:</strong> Save 3 months expenses - freelance income fluctuates!</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">📞</span> Report Scams in Philippines</h3>
+                <ul>
+                    <li><strong>DOLE Hotline:</strong> 1349 - For illegal job placement fees</li>
+                    <li><strong>NBI Cybercrime:</strong> cybercrime@nbi.gov.ph</li>
+                    <li><strong>PNP Anti-Cybercrime:</strong> Report at acg.pnp.gov.ph</li>
+                    <li><strong>DTI:</strong> File complaint for fake businesses</li>
+                    <li><strong>Platform Support:</strong> Report on Upwork, Fiverr, OnlineJobs.ph</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="ai-scams" class="content">
+            <div class="warning-card">
+                <h3 style="margin-bottom: 1%;">🤖 2026 AI-Powered Scams Alert</h3>
+                <p style="font-size: 0.85rem;">Scammers now use advanced AI to create fake companies, clone voices, generate deepfakes, and write perfect contracts. These scams are harder to detect - stay vigilant!</p>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🎙️</span> AI Voice Cloning Scams</h3>
+                <p><strong>How it works:</strong></p>
+                <ul>
+                    <li>Scammer finds CEO's voice from YouTube interviews, podcasts, or social media</li>
+                    <li>Uses AI (ElevenLabs, PlayHT) to clone voice in under 5 minutes</li>
+                    <li>Calls you pretending to be CEO with "urgent request"</li>
+                    <li>Pressures you: "I need you to transfer funds NOW" or "Change payroll account immediately"</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>Real examples in 2025-2026:</strong></p>
+                <ul>
+                    <li>VA received call from "boss" asking to buy ₱50k in gift cards (voice was cloned)</li>
+                    <li>"CEO" called asking for sensitive client data using cloned voice</li>
+                    <li>Fake "urgent payment" calls during weekends when real boss unreachable</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🛡️ How to protect yourself:</strong></p>
+                <ul>
+                    <li><strong>Verify through 2nd channel:</strong> If boss calls urgently, text/Slack them to confirm before acting</li>
+                    <li><strong>Listen for:</strong> Unnatural pauses, robotic tone, background noise inconsistencies</li>
+                    <li><strong>Establish code words:</strong> Agree on secret phrase with real boss for urgent requests</li>
+                    <li><strong>Never act on voice alone:</strong> Require written confirmation via official email/platform</li>
+                    <li><strong>Trust your gut:</strong> If "boss" sounds slightly off or request is unusual, verify!</li>
+                    <li><strong>Ask personal questions:</strong> Real boss will know; AI clone won't ("What did we discuss in Monday's meeting?")</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">📹</span> Deepfake Video Interview Scams</h3>
+                <p><strong>What scammers do:</strong></p>
+                <ul>
+                    <li>Create AI-generated "HR manager" using deepfake technology (D-ID, Synthesia)</li>
+                    <li>Conduct entire "interview" via Zoom/Teams with fake person</li>
+                    <li>Video looks real but it's AI-generated face with text-to-speech</li>
+                    <li>Goal: Steal your personal info, ID documents, or get you to pay "fees"</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🔍 How to detect deepfakes:</strong></p>
+                <ul>
+                    <li><strong>Unnatural eye movement:</strong> Eyes don't blink naturally or track properly</li>
+                    <li><strong>Weird mouth sync:</strong> Lips slightly off from audio (lag or mismatch)</li>
+                    <li><strong>Frozen background:</strong> Only face moves, nothing else (plants, curtains static)</li>
+                    <li><strong>Lighting issues:</strong> Face lighting doesn't match room lighting</li>
+                    <li><strong>Hair/glasses glitches:</strong> Hair edge looks blurry or glasses have artifacts</li>
+                    <li><strong>Robotic responses:</strong> Answers are too perfect, scripted, no natural "ums" or pauses</li>
+                    <li><strong>No spontaneity:</strong> Can't answer unexpected questions naturally</li>
+                    <li><strong>Camera always on:</strong> Never turns off camera even briefly (AI needs to stay on)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Protection tactics:</strong></p>
+                <ul>
+                    <li><strong>Ask to turn camera off/on:</strong> Real person will comply; deepfake might glitch</li>
+                    <li><strong>Request random movement:</strong> "Can you wave?" or "Show me your office?" - AI struggles</li>
+                    <li><strong>Ask unexpected questions:</strong> "What's the weather like there today?" (AI might give generic answer)</li>
+                    <li><strong>Check LinkedIn profile:</strong> Video interviewer should have established profile with connections</li>
+                    <li><strong>Insist on meeting others:</strong> "Can I meet the team?" - scammers usually refuse</li>
+                    <li><strong>Use detection tools:</strong> Deepware Scanner, Sensity AI (check video authenticity)</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">📄</span> ChatGPT-Generated Fake Contracts</h3>
+                <p><strong>The scam:</strong></p>
+                <ul>
+                    <li>Scammer uses ChatGPT/Claude to write professional-looking contract in seconds</li>
+                    <li>Looks legit: proper legal language, formatted nicely, sounds official</li>
+                    <li>Hidden traps: Unreasonable termination clauses, IP theft, unfair payment terms</li>
+                    <li>Mass-produced: Same contract sent to 100+ VAs (just changes names)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Red flags in AI-generated contracts:</strong></p>
+                <ul>
+                    <li><strong>Too perfect:</strong> No typos, overly formal language, textbook structure</li>
+                    <li><strong>Generic terms:</strong> "The Company" instead of actual company name throughout</li>
+                    <li><strong>Vague scope:</strong> "Freelancer will perform various tasks as assigned" (too broad!)</li>
+                    <li><strong>One-sided clauses:</strong> All rights to company, zero protection for you</li>
+                    <li><strong>Instant termination:</strong> "Company can terminate anytime without cause or payment"</li>
+                    <li><strong>IP grabbing:</strong> "All work created, even unrelated, belongs to Company forever"</li>
+                    <li><strong>No jurisdiction:</strong> Doesn't specify which country's laws apply</li>
+                    <li><strong>Payment loopholes:</strong> "Payment subject to client approval and quality standards" (they decide = never pay)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ How to protect yourself:</strong></p>
+                <ul>
+                    <li><strong>Read EVERYTHING:</strong> Don't skip sections - scammers hide traps in middle paragraphs</li>
+                    <li><strong>Ask questions:</strong> "What does this clause mean?" - scammer might not know (AI wrote it!)</li>
+                    <li><strong>Request changes:</strong> Legit companies negotiate; scammers refuse any edits</li>
+                    <li><strong>Check company name:</strong> Should appear throughout, not just "Company" or "Employer"</li>
+                    <li><strong>Verify legal entity:</strong> Company name should match registered business (DTI/SEC check)</li>
+                    <li><strong>Get lawyer review:</strong> For contracts over ₱50k or 6+ months commitment</li>
+                    <li><strong>Compare versions:</strong> Google similar contracts to spot copy-paste AI text</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🏢</span> Synthetic Identity Fraud - Completely Fake Companies</h3>
+                <p><strong>How scammers build fake companies with AI:</strong></p>
+                <ul>
+                    <li><strong>AI website builder:</strong> Creates professional site in 30 minutes (Wix AI, Framer AI)</li>
+                    <li><strong>AI-written content:</strong> About us, services, team bios all ChatGPT-generated</li>
+                    <li><strong>Fake team photos:</strong> AI-generated faces from ThisPersonDoesNotExist.com</li>
+                    <li><strong>AI logo designer:</strong> Creates professional logo instantly</li>
+                    <li><strong>Fake reviews:</strong> AI writes 50 glowing reviews, posts on Google/Trustpilot</li>
+                    <li><strong>Social media:</strong> AI creates posts, followers bought in bulk</li>
+                    <li><strong>Result:</strong> Looks 100% real but entire company is fabricated!</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🔍 How to detect synthetic companies:</strong></p>
+                <ul>
+                    <li><strong>WHOIS check:</strong> Domain created last month but claims "10 years experience"</li>
+                    <li><strong>Reverse image search:</strong> Team photos are AI-generated or stock images</li>
+                    <li><strong>No real employees on LinkedIn:</strong> "Team" profiles are new/empty/fake</li>
+                    <li><strong>Generic content:</strong> Website text sounds AI-written (perfect but generic)</li>
+                    <li><strong>No phone calls:</strong> Only email/text communication (no real office)</li>
+                    <li><strong>Address fake:</strong> Google Maps shows residential/empty building</li>
+                    <li><strong>Reviews too perfect:</strong> All 5-star with generic praise posted same week</li>
+                    <li><strong>No business registration:</strong> Can't find in SEC/DTI/government databases</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Verification checklist:</strong></p>
+                <ul>
+                    <li><strong>Check domain age:</strong> whois.com - Real companies usually 2+ years old</li>
+                    <li><strong>LinkedIn deep dive:</strong> Real employees with history, connections, posts</li>
+                    <li><strong>Call them:</strong> Real company has working phone, receptionist, office sounds</li>
+                    <li><strong>Visit office:</strong> If local, drive by address to verify it's real</li>
+                    <li><strong>Check business registration:</strong> SEC.gov.ph or DTI for PH companies</li>
+                    <li><strong>Google News search:</strong> Real companies appear in news/press releases</li>
+                    <li><strong>Review patterns:</strong> Organic reviews have variety (dates, detail, some negative)</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">💼</span> AI Job Post Generators - Mass Fake Jobs</h3>
+                <p><strong>The problem:</strong></p>
+                <ul>
+                    <li>Scammers use AI to create 1,000+ fake job posts per day</li>
+                    <li>Posts are unique, professional, pass platform filters</li>
+                    <li>Flooding Upwork, OnlineJobs.ph, LinkedIn with scams</li>
+                    <li>Goal: Harvest emails, IDs, or get you to pay "fees"</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Signs of AI-generated job posts:</strong></p>
+                <ul>
+                    <li><strong>Too detailed but vague:</strong> Long description but doesn't say what you'll actually DO</li>
+                    <li><strong>Perfect English:</strong> No typos, overly formal, textbook grammar</li>
+                    <li><strong>Buzzword overload:</strong> "Synergize dynamic solutions with innovative paradigms"</li>
+                    <li><strong>Generic requirements:</strong> "Excellent communication, self-starter, team player" (everyone says this)</li>
+                    <li><strong>Copy-paste feel:</strong> Sounds like every other job post (AI template)</li>
+                    <li><strong>Posted in multiple groups:</strong> Same post word-for-word across 20 FB groups</li>
+                    <li><strong>Unnatural flow:</strong> Sentences connect weirdly, no personal voice</li>
+                    <li><strong>Too many emojis:</strong> "💰 EARN BIG 💸 FLEXIBLE HOURS 🎉" (AI trying to seem casual)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ How to verify real jobs:</strong></p>
+                <ul>
+                    <li><strong>Check poster history:</strong> Real recruiter has multiple posts, reviews, long history</li>
+                    <li><strong>Visit company site:</strong> Job should appear on official careers page</li>
+                    <li><strong>Ask specific questions:</strong> "What does a typical Tuesday look like?" - scammer can't answer</li>
+                    <li><strong>Look for human touch:</strong> Real posts have personality, specific details, minor typos</li>
+                    <li><strong>Google job title:</strong> If exact phrase appears 100+ times = AI template</li>
+                </ul>
+            </div>
+            
+            <div class="card safe-practice">
+                <h3><span class="icon">🛡️</span> AI Scam Detection Tools (2026)</h3>
+                <ul>
+                    <li><strong>Deepfake Detection:</strong></li>
+                    <ul style="margin-left: 5%; margin-top: 0.5%;">
+                        <li>Deepware Scanner - Analyze video for deepfakes</li>
+                        <li>Sensity AI - Real-time deepfake detection</li>
+                        <li>Microsoft Video Authenticator - Check video authenticity</li>
+                    </ul>
+                    <li style="margin-top: 1%;"><strong>AI Text Detection:</strong></li>
+                    <ul style="margin-left: 5%; margin-top: 0.5%;">
+                        <li>GPTZero - Detect ChatGPT-written contracts/job posts</li>
+                        <li>Originality.ai - Check if text is AI-generated</li>
+                        <li>CopyLeaks AI Detector - Identify AI content</li>
+                    </ul>
+                    <li style="margin-top: 1%;"><strong>Voice Analysis:</strong></li>
+                    <ul style="margin-left: 5%; margin-top: 0.5%;">
+                        <li>Pindrop - Verify voice authenticity in calls</li>
+                        <li>Resemble AI Detect - Identify cloned voices</li>
+                    </ul>
+                    <li style="margin-top: 1%;"><strong>Image Verification:</strong></li>
+                    <ul style="margin-left: 5%; margin-top: 0.5%;">
+                        <li>FotoForensics - Detect edited/fake photos</li>
+                        <li>Google Reverse Image Search - Find original source</li>
+                        <li>TinEye - Track where image appears online</li>
+                    </ul>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">💡</span> AI Scam Protection Strategies</h3>
+                <ul>
+                    <li><strong>Slow down:</strong> AI scammers rely on speed - take time to verify</li>
+                    <li><strong>Multi-channel verification:</strong> Confirm through email + phone + LinkedIn</li>
+                    <li><strong>Ask unexpected questions:</strong> AI struggles with unscripted responses</li>
+                    <li><strong>Request proof:</strong> Business license, office photos, team video call</li>
+                    <li><strong>Trust human imperfection:</strong> Real people make typos, pause, say "um"</li>
+                    <li><strong>Use platforms:</strong> Upwork/Fiverr verify companies (harder for AI scammers)</li>
+                    <li><strong>Check metadata:</strong> AI-generated images/docs often have tell-tale signs</li>
+                    <li><strong>Stay updated:</strong> AI scams evolve monthly - follow scam alert communities</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">⚠️</span> What to Do If You Suspect AI Scam</h3>
+                <ul>
+                    <li><strong>STOP immediately:</strong> Don't proceed with application/work</li>
+                    <li><strong>Don't confront:</strong> Scammer will just disappear and target others</li>
+                    <li><strong>Document everything:</strong> Screenshots of posts, emails, videos, contracts</li>
+                    <li><strong>Report to platform:</strong> Upwork, Fiverr, LinkedIn abuse reporting</li>
+                    <li><strong>Report to authorities:</strong> NBI Cybercrime, IC3.gov, platform support</li>
+                    <li><strong>Warn community:</strong> Post in Filipino Freelancer groups with evidence</li>
+                    <li><strong>If you paid:</strong> Contact bank immediately for chargeback/dispute</li>
+                    <li><strong>If shared ID:</strong> Monitor credit report, enable fraud alerts</li>
+                </ul>
+            </div>
+            
+            <div class="warning-card" style="margin-top: 2%;">
+                <h3 style="margin-bottom: 1%;">🎯 Remember: AI Makes Scams Look Perfect</h3>
+                <p style="font-size: 0.85rem;">In 2026, scammers can create professional websites, contracts, and videos in minutes. The NEW red flag is TOO PERFECT. Real companies have imperfections. Trust your gut - if it feels too polished, too scripted, too good to be true, verify heavily before proceeding!</p>
+            </div>
+        </div>
+        
+        <div id="crypto-scams" class="content">
+            <div class="warning-card">
+                <h3 style="margin-bottom: 1%;">💰 Cryptocurrency Payment Scams (2026)</h3>
+                <p style="font-size: 0.85rem;">Scammers love crypto because transactions are irreversible and hard to trace. If a client insists on crypto-only payment, EXTREME caution required!</p>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">₿</span> Crypto-Only Payment Traps</h3>
+                <p><strong>How the scam works:</strong></p>
+                <ul>
+                    <li>"We only pay in Bitcoin/Ethereum" or "We're a Web3 company, crypto only"</li>
+                    <li>Promises high rates: "₱800/hour paid in BTC" (sounds great!)</li>
+                    <li>You complete work, they send crypto to wallet address</li>
+                    <li>BUT: They send fake transaction, wrong network, or nothing at all</li>
+                    <li>No recourse: Can't chargeback crypto like PayPal/credit cards</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Red flags:</strong></p>
+                <ul>
+                    <li><strong>Refuses traditional payment:</strong> Won't use PayPal, bank, or Wise "because fees" (fees are tiny!)</li>
+                    <li><strong>Pressure to create wallet:</strong> "Just make a MetaMask account, it's easy"</li>
+                    <li><strong>Unfamiliar coins:</strong> "We pay in our own token XYZ" (worthless coin!)</li>
+                    <li><strong>Advance wallet setup:</strong> Asks for wallet address before job offer</li>
+                    <li><strong>No escrow option:</strong> Refuses to use crypto escrow services</li>
+                    <li><strong>"Gas fees" excuses:</strong> "Send me ₱500 for gas fees first" (scam!)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ If you must accept crypto:</strong></p>
+                <ul>
+                    <li><strong>Use escrow:</strong> Escrow.com supports crypto, LocalCryptos for P2P escrow</li>
+                    <li><strong>Stick to major coins:</strong> Only BTC, ETH, USDT, USDC (not "their coin")</li>
+                    <li><strong>Verify on blockchain:</strong> Check transaction on Etherscan/Blockchain.com before delivering</li>
+                    <li><strong>Wait for confirmations:</strong> 3-6 confirmations before releasing work (10-60 minutes)</li>
+                    <li><strong>Test payment first:</strong> Small test transaction (₱100) before full project</li>
+                    <li><strong>Convert immediately:</strong> Use Binance/Coins.ph to convert to PHP same day (price volatility!)</li>
+                    <li><strong>Document everything:</strong> Screenshots of wallet address, transaction hash, agreements</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🎨</span> NFT Work Scams</h3>
+                <p><strong>The scam:</strong></p>
+                <ul>
+                    <li>"Design NFTs for our collection, we'll pay in our project token"</li>
+                    <li>You create 50+ digital artworks (real work!)</li>
+                    <li>They "pay" you in their worthless token (can't sell it, no value)</li>
+                    <li>Or: "We'll pay after NFTs sell" (they never sell or scammer keeps money)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Warning signs:</strong></p>
+                <ul>
+                    <li><strong>"Revenue share" model:</strong> "You get 10% of NFT sales" (you'll never see money)</li>
+                    <li><strong>Their token payment:</strong> "We pay in $PROJECTNAME tokens" (created yesterday, worthless)</li>
+                    <li><strong>Huge volume request:</strong> "Design 1,000 NFTs" (free labor farm)</li>
+                    <li><strong>No upfront payment:</strong> "We pay after mint/after launch" (never happens)</li>
+                    <li><strong>Equity instead of cash:</strong> "You'll be co-founder!" (you just want to be paid!)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Safe NFT project guidelines:</strong></p>
+                <ul>
+                    <li><strong>Demand USD/PHP payment:</strong> Not tokens, not "revenue share" - actual money</li>
+                    <li><strong>50% upfront minimum:</strong> For large collections (100+ pieces)</li>
+                    <li><strong>Use escrow:</strong> Milestone payments through platform or crypto escrow</li>
+                    <li><strong>Check project legitimacy:</strong> Real NFT projects have community, roadmap, doxxed team</li>
+                    <li><strong>Contract IP rights:</strong> Specify what happens to your art if project fails</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🔓</span> Wallet Connection/Draining Scams</h3>
+                <p><strong>How they steal your crypto:</strong></p>
+                <ul>
+                    <li>"Connect your MetaMask to our payment portal to receive funds"</li>
+                    <li>You click "Connect Wallet" on their fake site</li>
+                    <li>Hidden malicious contract drains ALL crypto from your wallet instantly</li>
+                    <li>Could lose thousands in seconds - irreversible!</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Wallet draining red flags:</strong></p>
+                <ul>
+                    <li><strong>Asks to connect wallet:</strong> To "verify identity" or "receive payment" (scam tactic!)</li>
+                    <li><strong>Suspicious website:</strong> Looks like real site but URL slightly different (metmask.com vs metamask.com)</li>
+                    <li><strong>Urgent approval:</strong> "Click approve now to get paid" (creates urgency)</li>
+                    <li><strong>Multiple signatures:</strong> Asks you to sign 3-4 transactions (each draining more)</li>
+                    <li><strong>Unknown contracts:</strong> Transaction shows unfamiliar contract address</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Wallet protection rules:</strong></p>
+                <ul>
+                    <li><strong>NEVER connect wallet to untrusted sites:</strong> No legitimate employer needs this!</li>
+                    <li><strong>Payment = sending only:</strong> To receive crypto, just give address (no "connecting" needed)</li>
+                    <li><strong>Read before signing:</strong> Every wallet signature - check what you're approving</li>
+                    <li><strong>Use separate wallets:</strong> Work wallet (small amounts) vs savings wallet (main funds)</li>
+                    <li><strong>Revoke approvals:</strong> Use Revoke.cash to cancel old wallet connections</li>
+                    <li><strong>Hardware wallet for savings:</strong> Ledger/Trezor for large amounts (offline storage)</li>
+                    <li><strong>Never share seed phrase:</strong> 12/24 word recovery phrase = your money. NEVER share!</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">💵</span> Stablecoin Scams & Chargebacks</h3>
+                <p><strong>What are stablecoins:</strong> Crypto supposedly pegged to $1 (USDT, USDC, BUSD)</p>
+                <p style="margin-top: 1%;"><strong>The scams:</strong></p>
+                <ul>
+                    <li><strong>Fake stablecoins:</strong> "We pay in USDT" but send fake token that looks similar</li>
+                    <li><strong>Wrong network:</strong> Send USDT on BSC instead of Ethereum (you can't access it)</li>
+                    <li><strong>Centralized freezing:</strong> Tether/Circle can freeze USDT/USDC (client claims "stolen", freezes your payment)</li>
+                    <li><strong>Chargeback equivalent:</strong> Reports wallet as hacked, gets stablecoins frozen after you deliver work</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Stablecoin red flags:</strong></p>
+                <ul>
+                    <li><strong>Insists on specific network:</strong> "Must use BSC not Ethereum" (cheaper for them, risky for you)</li>
+                    <li><strong>Unknown stablecoin:</strong> "We use XUSD" (not USDT/USDC - probably fake)</li>
+                    <li><strong>Sends before confirming details:</strong> Sends first, then argues about amount/network</li>
+                    <li><strong>"Oops wrong network":</strong> Claims they sent on Polygon not Ethereum (recovery scam)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Stablecoin safety:</strong></p>
+                <ul>
+                    <li><strong>Verify token contract:</strong> Check on Etherscan - is it REAL USDT? (address: 0xdac17f958d2ee523a2206206994597c13d831ec7)</li>
+                    <li><strong>Agree on network FIRST:</strong> Before work starts: "Ethereum mainnet only" or "BSC only"</li>
+                    <li><strong>Wait for confirmations:</strong> Don't deliver until 6+ blockchain confirmations</li>
+                    <li><strong>Convert immediately:</strong> Don't hold stablecoins - convert to PHP within 24 hours</li>
+                    <li><strong>Prefer USDC over USDT:</strong> More regulated, less freeze risk</li>
+                    <li><strong>Screenshot everything:</strong> Wallet address, transaction hash, agreement on network/amount</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🏦</span> Fake Crypto Exchanges & Wallets</h3>
+                <p><strong>The scam:</strong></p>
+                <ul>
+                    <li>Scammer: "Register on CryptoExchangePro.com to receive payment"</li>
+                    <li>Looks like real exchange (fake Binance/Coinbase clone)</li>
+                    <li>You create account, they "send" crypto (shows in fake balance)</li>
+                    <li>When you try to withdraw: "Pay ₱5,000 fee first" or "Account locked, send ₱10k to verify"</li>
+                    <li>It's all fake - no crypto was ever sent!</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Fake exchange red flags:</strong></p>
+                <ul>
+                    <li><strong>Unknown platform:</strong> Never heard of this exchange before</li>
+                    <li><strong>Client insists on it:</strong> "You MUST use this specific exchange" (won't use Binance/Coinbase)</li>
+                    <li><strong>Domain looks suspicious:</strong> binence.com, coinsbase.com (typosquatting)</li>
+                    <li><strong>Can't withdraw:</strong> Balance shows but withdrawal "requires verification fee"</li>
+                    <li><strong>Grammar errors:</strong> Fake sites have poor English, weird phrasing</li>
+                    <li><strong>No KYC:</strong> Real exchanges require ID verification (Know Your Customer)</li>
+                    <li><strong>Withdrawal fees upfront:</strong> "Send us ₱5k to unlock withdrawal" (never legit!)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Only use trusted exchanges (PH):</strong></p>
+                <ul>
+                    <li><strong>Binance.com:</strong> World's largest, trusted, licensed in PH</li>
+                    <li><strong>Coins.ph:</strong> Philippine-licensed, easy PHP conversion</li>
+                    <li><strong>PDAX:</strong> BSP-licensed Philippine exchange</li>
+                    <li><strong>Coinbase:</strong> US-based, regulated, trusted</li>
+                    <li><strong>Kraken:</strong> Long-standing, reputable</li>
+                    <li><strong>NEVER use:</strong> Unknown exchanges client suggests!</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">⛽</span> "Gas Fee" & "Unlock Fee" Scams</h3>
+                <p><strong>Common variations:</strong></p>
+                <ul>
+                    <li>"Send ₱500 worth of ETH for gas fees so we can send your payment"</li>
+                    <li>"Your payment is locked, send ₱2,000 to unlock it"</li>
+                    <li>"Pay ₱1,000 transaction fee to receive ₱50,000"</li>
+                    <li>"Wallet needs activation - send 0.01 BTC first"</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 The truth:</strong></p>
+                <ul>
+                    <li><strong>Gas fees:</strong> Paid by SENDER not receiver. You never pay gas to receive!</li>
+                    <li><strong>No unlock fees:</strong> Legitimate crypto transactions don't have "unlock fees"</li>
+                    <li><strong>Free to receive:</strong> Receiving crypto to your wallet is ALWAYS free</li>
+                    <li><strong>Classic scam:</strong> Once you send "fee", they disappear</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Remember:</strong></p>
+                <ul>
+                    <li><strong>Never send crypto to receive crypto:</strong> This is ALWAYS a scam, no exceptions!</li>
+                    <li><strong>Sender pays gas:</strong> They're sending you money, they pay the transaction fee</li>
+                    <li><strong>Just give address:</strong> All you need to receive crypto is your wallet address (0x...)</li>
+                </ul>
+            </div>
+            
+            <div class="card safe-practice">
+                <h3><span class="icon">✅</span> Safe Crypto Payment Practices for VAs</h3>
+                <ul>
+                    <li><strong>Prefer traditional payment:</strong> PayPal, Wise, bank transfer are safer than crypto</li>
+                    <li><strong>If crypto required:</strong> Only BTC, ETH, USDC, USDT on major networks</li>
+                    <li><strong>Always use escrow:</strong> Never trust "I'll send after you deliver"</li>
+                    <li><strong>Verify on blockchain:</strong> Check Etherscan.io or Blockchain.com before delivering work</li>
+                    <li><strong>Wait for confirmations:</strong> 3-6 confirmations (15-60 minutes) before releasing deliverables</li>
+                    <li><strong>Test payment first:</strong> ₱100-500 test transaction before starting large project</li>
+                    <li><strong>Convert immediately:</strong> Don't hold crypto - convert to PHP within 24 hours (volatility risk!)</li>
+                    <li><strong>Separate wallets:</strong> Work wallet (small amounts) vs personal savings wallet</li>
+                    <li><strong>Never connect wallet:</strong> To receive payment, just share address - no "connecting" needed</li>
+                    <li><strong>Document everything:</strong> Screenshots of agreements, wallet addresses, transaction hashes</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">🔍</span> How to Verify Crypto Transactions</h3>
+                <p><strong>Step-by-step verification:</strong></p>
+                <ul>
+                    <li><strong>Step 1:</strong> Get transaction hash (TxHash) from client - looks like "0x7a8b9c..."</li>
+                    <li><strong>Step 2:</strong> Go to blockchain explorer:
+                        <ul style="margin-left: 5%; margin-top: 0.5%;">
+                            <li>Ethereum: etherscan.io</li>
+                            <li>Bitcoin: blockchain.com</li>
+                            <li>BSC: bscscan.com</li>
+                            <li>Polygon: polygonscan.com</li>
+                        </ul>
+                    </li>
+                    <li><strong>Step 3:</strong> Paste transaction hash in search</li>
+                    <li><strong>Step 4:</strong> Verify:
+                        <ul style="margin-left: 5%; margin-top: 0.5%;">
+                            <li>✅ Correct amount? (Check matches agreed payment)</li>
+                            <li>✅ Correct address? (Your wallet address as recipient)</li>
+                            <li>✅ Confirmed? (Green checkmark, 3+ confirmations)</li>
+                            <li>✅ Correct token? (Real USDT not fake token)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Step 5:</strong> Only after ALL checks pass → deliver work</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">⚠️</span> When to Refuse Crypto Payment</h3>
+                <ul>
+                    <li><strong>New client:</strong> First time working together (too risky for beginners)</li>
+                    <li><strong>No escrow:</strong> Client refuses to use crypto escrow service</li>
+                    <li><strong>Unknown coin:</strong> Wants to pay in "their token" or unknown cryptocurrency</li>
+                    <li><strong>Pressure tactics:</strong> "We can only pay crypto, take it or leave it" (red flag!)</li>
+                    <li><strong>No blockchain proof:</strong> Can't provide transaction hash or blockchain evidence</li>
+                    <li><strong>Large amount:</strong> First project over ₱50,000 (too much risk for crypto)</li>
+                    <li><strong>You're uncomfortable:</strong> If you don't understand crypto well, stick to PayPal/bank!</li>
+                </ul>
+                <p style="margin-top: 1%; color: #27ae60;"><strong>💡 It's OK to say NO:</strong> "I appreciate the offer, but I only accept PayPal/bank transfer for now." Legit clients will accommodate!</p>
+            </div>
+            
+            <div class="warning-card" style="margin-top: 2%;">
+                <h3 style="margin-bottom: 1%;">🎯 Crypto Golden Rules</h3>
+                <p style="font-size: 0.85rem;">
+                    1️⃣ Never send crypto to receive crypto<br>
+                    2️⃣ Never connect wallet to receive payment<br>
+                    3️⃣ Never share your seed phrase/recovery words<br>
+                    4️⃣ Verify EVERYTHING on blockchain before delivering<br>
+                    5️⃣ When in doubt, refuse crypto and ask for PayPal/bank
+                </p>
+            </div>
+        </div>
+        
+        <div id="platform-scams" class="content">
+            <div class="warning-card">
+                <h3 style="margin-bottom: 1%;">🎭 Platform Manipulation Scams (2026)</h3>
+                <p style="font-size: 0.85rem;">Scammers exploit trust in platforms like Upwork, Fiverr, LinkedIn by creating fake versions, buying fake reviews, or hijacking real accounts. Learn to spot the tricks!</p>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🔗</span> Fake Platform Clones - Phishing Sites</h3>
+                <p><strong>How it works:</strong></p>
+                <ul>
+                    <li>Scammer creates fake website that looks EXACTLY like Upwork, Fiverr, or OnlineJobs.ph</li>
+                    <li>Sends you email: "You have a new job offer! Click here to view"</li>
+                    <li>Link goes to upwork-jobs.com (NOT upwork.com!)</li>
+                    <li>You enter login credentials → scammer steals your account</li>
+                    <li>Or: Fake site asks for payment info, ID documents, personal data</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Common fake domains:</strong></p>
+                <ul>
+                    <li><strong>upwork-jobs.com</strong> (Real: upwork.com)</li>
+                    <li><strong>fiverr-gigs.com</strong> (Real: fiverr.com)</li>
+                    <li><strong>onlinejobs-ph.com</strong> (Real: onlinejobs.ph)</li>
+                    <li><strong>linked-in.com</strong> (Real: linkedin.com)</li>
+                    <li><strong>freelancer-jobs.com</strong> (Real: freelancer.com)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🔍 How to spot fake sites:</strong></p>
+                <ul>
+                    <li><strong>Check URL carefully:</strong> Look at address bar - is it EXACT match? (upwork.com not upwork-jobs.com)</li>
+                    <li><strong>No HTTPS/lock icon:</strong> Real platforms always have secure connection (🔒)</li>
+                    <li><strong>Grammar errors:</strong> Fake sites often have typos, weird phrasing</li>
+                    <li><strong>Design slightly off:</strong> Colors, fonts, logos look slightly different</li>
+                    <li><strong>Asks for weird info:</strong> Real Upwork won't ask for full SSN in login page</li>
+                    <li><strong>Email domain mismatch:</strong> Email from upwork@gmail.com (Real: noreply@upwork.com)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Protection tactics:</strong></p>
+                <ul>
+                    <li><strong>Never click email links:</strong> Go directly to platform by typing URL yourself</li>
+                    <li><strong>Bookmark real sites:</strong> Use bookmarks, not Google search (ads can be fake!)</li>
+                    <li><strong>Check SSL certificate:</strong> Click lock icon → Certificate should say "Upwork, Inc." etc.</li>
+                    <li><strong>Use 2FA:</strong> Even if password stolen, they can't access with two-factor auth</li>
+                    <li><strong>Different passwords:</strong> Unique password for each platform</li>
+                    <li><strong>Report phishing:</strong> Forward to platform security (security@upwork.com)</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">⭐</span> Review Manipulation - Bought Fake Reviews</h3>
+                <p><strong>The scam:</strong></p>
+                <ul>
+                    <li>Scammer buys 50+ five-star reviews on Fiverr, Upwork, Google</li>
+                    <li>Profile looks legit: "5.0 stars, 200 reviews, Top Rated"</li>
+                    <li>You trust them because of reviews → get scammed</li>
+                    <li>Reviews are fake: Bought from review farms for ₱50-200 each</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Signs of fake reviews:</strong></p>
+                <ul>
+                    <li><strong>All 5-stars:</strong> Real accounts have some 4-star, occasional 3-star</li>
+                    <li><strong>Generic praise:</strong> "Great client!", "Excellent!", "Highly recommend!" (no specific details)</li>
+                    <li><strong>Same date cluster:</strong> 50 reviews all posted within same week</li>
+                    <li><strong>Reviewer profiles empty:</strong> Reviewers have no photo, no history, generic names</li>
+                    <li><strong>Perfect English everywhere:</strong> No natural variation in writing style</li>
+                    <li><strong>No negative reviews:</strong> Even Amazon has 1-star reviews - perfect record is suspicious</li>
+                    <li><strong>Vague project descriptions:</strong> "Worked on social media" but no specifics</li>
+                    <li><strong>Review length identical:</strong> All reviews exactly 2-3 sentences (template!)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🔍 How to verify real reviews:</strong></p>
+                <ul>
+                    <li><strong>Check reviewer profiles:</strong> Real reviewers have complete profiles, history, connections</li>
+                    <li><strong>Look for details:</strong> "John helped with Facebook ads for our bakery - CTR improved 15%" = specific, real</li>
+                    <li><strong>Date distribution:</strong> Reviews spread over months/years, not all at once</li>
+                    <li><strong>Some imperfection:</strong> Mix of ratings, some constructive feedback</li>
+                    <li><strong>Cross-check platforms:</strong> Check LinkedIn, Google, multiple platforms for consistency</li>
+                    <li><strong>Ask for references:</strong> Real clients will provide contact info for past employers</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Safe hiring practices:</strong></p>
+                <ul>
+                    <li><strong>Don't rely on reviews alone:</strong> Verify company separately (website, LinkedIn, Google)</li>
+                    <li><strong>Start small:</strong> First project = small test (₱2k-5k) regardless of reviews</li>
+                    <li><strong>Interview thoroughly:</strong> Ask specific questions about past projects in reviews</li>
+                    <li><strong>Check response quality:</strong> How they communicate tells more than reviews</li>
+                    <li><strong>Use platform protection:</strong> Escrow, milestone payments even for "5-star" clients</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🚪</span> Escrow Bypass - "Move Off-Platform" Scams</h3>
+                <p><strong>How they manipulate you:</strong></p>
+                <ul>
+                    <li>"Let's move to WhatsApp/Telegram for faster communication" (seems reasonable)</li>
+                    <li>"Platform fees are 20% - I'll pay you more if we work directly" (tempting offer!)</li>
+                    <li>"Send invoice to my personal email, I'll pay via bank transfer" (bypasses escrow)</li>
+                    <li>Once off-platform → no protection, no escrow, no recourse if scammed</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Escrow bypass red flags:</strong></p>
+                <ul>
+                    <li><strong>First message:</strong> "Let's continue on WhatsApp" before even discussing project</li>
+                    <li><strong>Fee complaints:</strong> "Upwork fees are too high" (20% for you maybe, only 3-5% for them!)</li>
+                    <li><strong>Direct payment offer:</strong> "I'll pay extra if we skip platform" (bribe to remove protection)</li>
+                    <li><strong>Urgency:</strong> "I need someone to start NOW, can't wait for platform approval"</li>
+                    <li><strong>Personal email:</strong> Wants you to send invoice to Gmail, not company email</li>
+                    <li><strong>Cash payment promises:</strong> "I'll pay you directly via bank transfer" (no escrow = no protection)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Stay protected:</strong></p>
+                <ul>
+                    <li><strong>Keep it on-platform:</strong> "I prefer to use Upwork for payment security"</li>
+                    <li><strong>Platform fees worth it:</strong> 20% fee = insurance against non-payment</li>
+                    <li><strong>WhatsApp for updates only:</strong> OK for quick chat, but payment/contracts stay on platform</li>
+                    <li><strong>If moving off-platform:</strong> Only after 3-5 successful projects AND use third-party escrow (Escrow.com)</li>
+                    <li><strong>Red line:</strong> New client wants off-platform = walk away</li>
+                    <li><strong>Report attempts:</strong> Upwork/Fiverr ban users who try to bypass - report them!</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">👤</span> Identity Hijacking - Stolen Accounts</h3>
+                <p><strong>The scam:</strong></p>
+                <ul>
+                    <li>Scammer hacks real company's Upwork/LinkedIn account</li>
+                    <li>Posts job using stolen credentials → looks 100% legit</li>
+                    <li>Company has real reviews, verified payment, established history</li>
+                    <li>You apply, get "hired", do work → scammer disappears</li>
+                    <li>Real company doesn't know their account was compromised</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Signs of hijacked account:</strong></p>
+                <ul>
+                    <li><strong>Sudden behavior change:</strong> Company that hired VAs in past now posting for completely different role</li>
+                    <li><strong>Communication mismatch:</strong> LinkedIn account says "New York" but person speaks with different accent/timezone</li>
+                    <li><strong>Payment method change:</strong> Always used Upwork escrow, now wants direct bank transfer</li>
+                    <li><strong>Email domain mismatch:</strong> LinkedIn shows @company.com but emails from @gmail.com</li>
+                    <li><strong>Rushed process:</strong> Account with 5-year history suddenly hiring in 24 hours (unusual urgency)</li>
+                    <li><strong>Can't video call:</strong> Makes excuses: "Camera broken", "Too busy", only text chat</li>
+                    <li><strong>Asks for sensitive info early:</strong> Real company wouldn't ask for SSN/ID before interview</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Verify account legitimacy:</strong></p>
+                <ul>
+                    <li><strong>Cross-check communications:</strong> LinkedIn message vs email vs phone - do they match?</li>
+                    <li><strong>Call company directly:</strong> Use phone number from official website (not one they gave you)</li>
+                    <li><strong>Video interview required:</strong> See the person, check if they match LinkedIn photo</li>
+                    <li><strong>Check recent activity:</strong> Legitimate account has consistent posting/hiring history</li>
+                    <li><strong>Verify email domain:</strong> Match exact company website domain</li>
+                    <li><strong>Ask specific questions:</strong> About company history, past projects - hijacker won't know details</li>
+                    <li><strong>Use platform messaging:</strong> If they insist on off-platform contact immediately = red flag</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">📱</span> LinkedIn Phishing & Fake Recruiters</h3>
+                <p><strong>How it works:</strong></p>
+                <ul>
+                    <li>You receive LinkedIn message: "Great profile! We have a job opportunity"</li>
+                    <li>Profile looks legit: Professional photo, "Senior Recruiter at XYZ Corp"</li>
+                    <li>Sends link: "Apply here: linkedin-jobs.com/apply" (FAKE site!)</li>
+                    <li>Or: Asks you to download "application form" (actually malware)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Fake LinkedIn recruiter signs:</strong></p>
+                <ul>
+                    <li><strong>Profile created recently:</strong> Account 1-3 months old, not years</li>
+                    <li><strong>Few connections:</strong> Real recruiters have 500+ connections in industry</li>
+                    <li><strong>Generic photo:</strong> Stock image or AI-generated face (reverse image search it!)</li>
+                    <li><strong>No posts/activity:</strong> Empty profile, no articles, no recommendations</li>
+                    <li><strong>Grammar errors:</strong> Profile description has typos, awkward phrasing</li>
+                    <li><strong>Sends external links:</strong> Real recruiters work within LinkedIn or official company site</li>
+                    <li><strong>Too eager:</strong> "You're perfect! When can you start?" without interview</li>
+                    <li><strong>Job description vague:</strong> "Various tasks" "Flexible work" (not specific)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ LinkedIn safety rules:</strong></p>
+                <ul>
+                    <li><strong>Never click links:</strong> In messages from unknown recruiters</li>
+                    <li><strong>Verify recruiter:</strong> Check their company page, connections, recommendations</li>
+                    <li><strong>Never download files:</strong> From messages before verifying sender</li>
+                    <li><strong>Use LinkedIn search:</strong> Find job on company's official LinkedIn page, not recruiter's link</li>
+                    <li><strong>Video call verification:</strong> Before sharing any personal info</li>
+                    <li><strong>Report suspicious:</strong> Click three dots → Report profile</li>
+                    <li><strong>Check company website:</strong> Real job should be posted there too</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">💳</span> "Verification Fee" Within Platform</h3>
+                <p><strong>The trick:</strong></p>
+                <ul>
+                    <li>On Upwork/Fiverr, client messages: "I'll hire you, but first pay ₱500 verification fee"</li>
+                    <li>"Platform requires background check fee - send to this account"</li>
+                    <li>"Activate your account by paying ₱1,000 to start working"</li>
+                    <li>These are ALL scams - platforms NEVER charge freelancers to get hired!</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Platform fee scam signs:</strong></p>
+                <ul>
+                    <li><strong>Any upfront payment:</strong> Real platforms deduct from YOUR earnings, never charge upfront</li>
+                    <li><strong>External payment:</strong> "Send to this GCash/PayPal" (not through platform)</li>
+                    <li><strong>Urgency:</strong> "Pay now to secure the job"</li>
+                    <li><strong>New client account:</strong> Just created profile, no history</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Know platform policies:</strong></p>
+                <ul>
+                    <li><strong>Upwork:</strong> FREE to create profile, FREE to apply, they take 10-20% from your EARNINGS</li>
+                    <li><strong>Fiverr:</strong> FREE to join, FREE to create gigs, they take 20% from sales</li>
+                    <li><strong>OnlineJobs.ph:</strong> Completely FREE for freelancers (clients pay subscription)</li>
+                    <li><strong>Freelancer.com:</strong> FREE basic account, optional upgrades but NEVER required to get hired</li>
+                    <li><strong>LinkedIn:</strong> FREE for job seekers, zero fees to apply</li>
+                </ul>
+            </div>
+            
+            <div class="card safe-practice">
+                <h3><span class="icon">🛡️</span> Platform Protection Best Practices</h3>
+                <ul>
+                    <li><strong>Enable 2FA:</strong> Two-factor authentication on all platforms</li>
+                    <li><strong>Unique strong passwords:</strong> Different for each platform, 12+ characters</li>
+                    <li><strong>Bookmark official sites:</strong> Type URL yourself, don't click email links</li>
+                    <li><strong>Check URL every time:</strong> Before entering password, verify exact domain</li>
+                    <li><strong>Stay on-platform:</strong> Keep communication & payment within platform initially</li>
+                    <li><strong>Verify before trusting:</strong> Reviews, profile age, video call, website check</li>
+                    <li><strong>Never pay to work:</strong> Legitimate platforms/jobs don't charge freelancers</li>
+                    <li><strong>Report suspicious activity:</strong> Help protect other freelancers</li>
+                    <li><strong>Use platform support:</strong> Message through platform's official help, not "support" that contacts you</li>
+                    <li><strong>Regular security checks:</strong> Review active sessions, change passwords quarterly</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">🔐</span> What to Do If Your Account Is Compromised</h3>
+                <p><strong>Immediate actions:</strong></p>
+                <ul>
+                    <li><strong>Change password NOW:</strong> On all platforms using same/similar password</li>
+                    <li><strong>Enable 2FA:</strong> Add extra security layer immediately</li>
+                    <li><strong>Check active sessions:</strong> Log out all devices/sessions except yours</li>
+                    <li><strong>Review recent activity:</strong> Check messages sent, job applications, payments</li>
+                    <li><strong>Contact platform support:</strong> Report compromise through official channels</li>
+                    <li><strong>Alert your clients:</strong> If scammer messaged them from your account</li>
+                    <li><strong>Check linked accounts:</strong> Bank, PayPal - remove if suspicious activity</li>
+                    <li><strong>Scan for malware:</strong> Run antivirus on all devices</li>
+                    <li><strong>Monitor credit:</strong> Watch for identity theft attempts</li>
+                </ul>
+            </div>
+            
+            <div class="warning-card" style="margin-top: 2%;">
+                <h3 style="margin-bottom: 1%;">🎯 Platform Safety Golden Rules</h3>
+                <p style="font-size: 0.85rem;">
+                    1️⃣ Type URLs yourself - never click email links<br>
+                    2️⃣ Check exact domain before entering password<br>
+                    3️⃣ Never pay to get a job (platforms or clients)<br>
+                    4️⃣ Keep payment on-platform until client proven trustworthy<br>
+                    5️⃣ Verify through multiple channels (LinkedIn + website + call)<br>
+                    6️⃣ Perfect reviews = suspicious, look for authentic variety<br>
+                    7️⃣ Enable 2FA everywhere - your best defense!
+                </p>
+            </div>
+        </div>
+        
+        <div id="data-scams" class="content">
+            <div class="warning-card">
+                <h3 style="margin-bottom: 1%;">🕵️ Data Harvesting Scams (2026)</h3>
+                <p style="font-size: 0.85rem;">Scammers pose as employers to collect your personal data, IDs, client lists, and login credentials. Your information is worth money on the dark web - protect it!</p>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🆔</span> Fake Background Check Scams</h3>
+                <p><strong>How it works:</strong></p>
+                <ul>
+                    <li>"Congratulations! You're hired. We just need to run a background check first."</li>
+                    <li>Asks for: SSS, TIN, PhilHealth, NBI Clearance, passport, birth certificate</li>
+                    <li>You provide documents thinking it's normal hiring process</li>
+                    <li>Scammer now has YOUR IDENTITY - can open loans, credit cards, fake IDs in your name</li>
+                    <li>Job never existed - they just wanted your data</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Fake background check red flags:</strong></p>
+                <ul>
+                    <li><strong>Before job offer:</strong> Asks for IDs BEFORE giving written offer letter (backward process!)</li>
+                    <li><strong>Too many documents:</strong> Needs passport + NBI + SSS + birth cert + utility bill (excessive!)</li>
+                    <li><strong>Send to personal email:</strong> "Email to recruiter@gmail.com" not official company domain</li>
+                    <li><strong>Upload to Google Drive:</strong> "Upload all docs to this shared folder" (not secure HR system)</li>
+                    <li><strong>No clear purpose:</strong> Doesn't explain why they need each specific document</li>
+                    <li><strong>Urgency:</strong> "Send within 24 hours or lose the position"</li>
+                    <li><strong>Pay for clearance:</strong> "Get NBI clearance yourself and send us" before confirming job</li>
+                    <li><strong>No verification call:</strong> Never spoke to anyone, just email exchanges</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Legitimate background check process:</strong></p>
+                <ul>
+                    <li><strong>AFTER written offer:</strong> Real companies verify AFTER extending job offer</li>
+                    <li><strong>Through official service:</strong> Uses verified background check company (HireRight, Sterling, etc.)</li>
+                    <li><strong>You authorize it:</strong> You sign consent form for specific checks</li>
+                    <li><strong>Company pays:</strong> Employer covers background check cost, not you</li>
+                    <li><strong>Secure portal:</strong> Upload to proper HR system, not Google Drive/email</li>
+                    <li><strong>Progressive disclosure:</strong> Basic info first, sensitive docs only when needed</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ What to share WHEN:</strong></p>
+                <ul>
+                    <li><strong>During application:</strong> Name, email, phone, resume, portfolio ONLY</li>
+                    <li><strong>After interview:</strong> References, work samples, certifications</li>
+                    <li><strong>After written offer:</strong> Government IDs (watermarked!), TIN, SSS</li>
+                    <li><strong>After starting work:</strong> Bank details for payroll setup</li>
+                    <li><strong>NEVER share:</strong> Full SSS, passport number, credit card, passwords</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">💻</span> Malware Disguised as "Work Software"</h3>
+                <p><strong>The scam:</strong></p>
+                <ul>
+                    <li>"Download our company software to start working" or "Install this VA tool"</li>
+                    <li>You download file: "CompanyApp.exe" or "VAToolkit.zip"</li>
+                    <li>It's actually malware: keylogger, ransomware, or data stealer</li>
+                    <li>Steals: Passwords, crypto wallets, client files, screenshots, banking info</li>
+                    <li>Or: Encrypts your files and demands ransom payment</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Malicious software red flags:</strong></p>
+                <ul>
+                    <li><strong>Download before interview:</strong> "Install this first so we can assess you"</li>
+                    <li><strong>From personal links:</strong> Dropbox/Google Drive link, not official app store</li>
+                    <li><strong>Unfamiliar software:</strong> Never heard of this "VA tool" before</li>
+                    <li><strong>Requires admin access:</strong> Asks for administrator privileges to install</li>
+                    <li><strong>Antivirus alerts:</strong> Your computer warns it's suspicious - LISTEN!</li>
+                    <li><strong>Can't find online:</strong> Google search shows no website, reviews, or info</li>
+                    <li><strong>Requires VPN/remote access:</strong> "Install TeamViewer so we can train you" (gives them control!)</li>
+                    <li><strong>Disables security:</strong> Asks you to turn off antivirus "temporarily"</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Legitimate work software:</strong></p>
+                <ul>
+                    <li><strong>Well-known tools:</strong> Slack, Zoom, Asana, Trello, Monday.com (industry standard)</li>
+                    <li><strong>Official sources:</strong> Download from official website or app store, not links</li>
+                    <li><strong>Company explains why:</strong> Clear reason: "We use Slack for communication"</li>
+                    <li><strong>After hiring:</strong> Software setup happens AFTER you're officially hired</li>
+                    <li><strong>Searchable online:</strong> Tool has website, reviews, known reputation</li>
+                    <li><strong>No admin access needed:</strong> Most legit tools don't require administrator privileges</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Safe software practices:</strong></p>
+                <ul>
+                    <li><strong>Google it first:</strong> Search "CompanyApp download" - is it real?</li>
+                    <li><strong>Check file type:</strong> .exe, .dmg files from unknown sources = DANGER</li>
+                    <li><strong>Scan before opening:</strong> Upload to VirusTotal.com to check for malware</li>
+                    <li><strong>Use virtual machine:</strong> Test suspicious software in isolated environment</li>
+                    <li><strong>Keep antivirus on:</strong> Never disable security to install anything</li>
+                    <li><strong>Ask for alternatives:</strong> "Can we use Zoom instead?" - legit companies will accommodate</li>
+                    <li><strong>Web-based preferred:</strong> Browser tools (Google Docs, Asana web) safer than downloads</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">📧</span> LinkedIn/Email Phishing for Data</h3>
+                <p><strong>Common tactics:</strong></p>
+                <ul>
+                    <li><strong>Fake job application:</strong> "Fill out this form" → link to phishing site that steals login</li>
+                    <li><strong>Document request:</strong> "Download and complete application.pdf" → actually malware</li>
+                    <li><strong>Account verification:</strong> "LinkedIn detected suspicious activity, verify here" → fake login page</li>
+                    <li><strong>Urgent security alert:</strong> "Your account will be suspended, click to verify" → phishing</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Phishing email/message signs:</strong></p>
+                <ul>
+                    <li><strong>Sender mismatch:</strong> Says "LinkedIn" but from noreply@linked-in-security.com (fake!)</li>
+                    <li><strong>Urgent language:</strong> "ACT NOW", "URGENT", "24 HOURS" (creating panic)</li>
+                    <li><strong>Generic greeting:</strong> "Dear User" not your actual name</li>
+                    <li><strong>Suspicious links:</strong> Hover over link - shows different URL than displayed text</li>
+                    <li><strong>Grammar errors:</strong> Professional companies don't have typos in official emails</li>
+                    <li><strong>Unexpected attachments:</strong> PDF/ZIP you didn't request</li>
+                    <li><strong>Requests sensitive data:</strong> "Confirm your password" (legit companies never ask!)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Phishing protection:</strong></p>
+                <ul>
+                    <li><strong>Never click email links:</strong> Go directly to website by typing URL</li>
+                    <li><strong>Hover before clicking:</strong> See where link really goes (bottom left of browser)</li>
+                    <li><strong>Check sender carefully:</strong> Is it @linkedin.com or @linked-in.com? (fake!)</li>
+                    <li><strong>Don't download attachments:</strong> From unknown senders or unexpected emails</li>
+                    <li><strong>Enable 2FA:</strong> Even if password phished, they can't access account</li>
+                    <li><strong>Report phishing:</strong> Forward to platform's official security team</li>
+                    <li><strong>Use password manager:</strong> Won't autofill on fake sites (good indicator!)</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🎨</span> Portfolio Mining - Stealing Your Work</h3>
+                <p><strong>How they steal:</strong></p>
+                <ul>
+                    <li><strong>"Sample project":</strong> "Create sample logo to show your skills" → uses it for free</li>
+                    <li><strong>Fake job:</strong> "Send portfolio of past work" → resells your designs as theirs</li>
+                    <li><strong>AI training:</strong> Collects thousands of portfolios to train AI design models</li>
+                    <li><strong>Competitor research:</strong> Poses as client to steal your techniques/processes</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Portfolio theft red flags:</strong></p>
+                <ul>
+                    <li><strong>Excessive samples:</strong> "Send 20 examples of your work" (they'll resell all 20!)</li>
+                    <li><strong>Full project as "test":</strong> "Design complete website as sample" (that's WORK, not test!)</li>
+                    <li><strong>Source files requested:</strong> "Send PSD/AI files to evaluate quality" (they'll steal/edit!)</li>
+                    <li><strong>No watermark allowed:</strong> "Send clean files without watermarks" (so they can use it!)</li>
+                    <li><strong>Won't sign NDA:</strong> Real companies protect both parties with agreements</li>
+                    <li><strong>Vague about usage:</strong> Won't specify what "test" will be used for</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Portfolio protection:</strong></p>
+                <ul>
+                    <li><strong>Watermark everything:</strong> "SAMPLE - NOT FOR USE - [Your Name]" across work</li>
+                    <li><strong>Low resolution only:</strong> 800px wide max, never print-quality</li>
+                    <li><strong>Mockups not finals:</strong> Show work in context but not deliverable files</li>
+                    <li><strong>Partial reveals:</strong> Show 50% of design, crop strategically</li>
+                    <li><strong>Never send source files:</strong> As portfolio - only after payment for actual job</li>
+                    <li><strong>Copyright notice:</strong> © 2026 [Your Name] on all samples</li>
+                    <li><strong>Reasonable tests only:</strong> 1-2 hour test max, simple/generic brief</li>
+                    <li><strong>NDA for real projects:</strong> If they want actual usable work, pay for it!</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🔑</span> API Key & Access Token Theft</h3>
+                <p><strong>Tech VA specific scam:</strong></p>
+                <ul>
+                    <li>"Connect your social media accounts to our management tool"</li>
+                    <li>"Give us API access to audit your client's Facebook ads"</li>
+                    <li>You provide: Facebook API key, Google Analytics access, Instagram tokens</li>
+                    <li>They now control YOUR CLIENT's accounts → can post spam, steal data, lock you out</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 API/access scam red flags:</strong></p>
+                <ul>
+                    <li><strong>Before hiring:</strong> Asks for API keys during "evaluation" phase</li>
+                    <li><strong>Full access requested:</strong> Admin/owner level, not viewer/analyst</li>
+                    <li><strong>Personal accounts:</strong> Wants YOUR social media, not test accounts</li>
+                    <li><strong>Unknown tool:</strong> "Connect to our proprietary platform" (never heard of it)</li>
+                    <li><strong>Can't explain why:</strong> Vague reason: "For testing purposes"</li>
+                    <li><strong>No revocation process:</strong> Doesn't explain how to remove access later</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Safe API practices:</strong></p>
+                <ul>
+                    <li><strong>Never share client access:</strong> Without client's explicit written permission</li>
+                    <li><strong>Use test accounts:</strong> Create demo accounts for portfolio/testing</li>
+                    <li><strong>Read-only access:</strong> If must share, give minimum permissions (viewer not admin)</li>
+                    <li><strong>Temporary tokens:</strong> Create tokens that expire in 24-48 hours</li>
+                    <li><strong>Revoke immediately:</strong> After "test" or if job doesn't work out</li>
+                    <li><strong>Monitor activity:</strong> Check access logs for unauthorized usage</li>
+                    <li><strong>Use OAuth carefully:</strong> Understand what permissions you're granting</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">📋</span> Email List & Contact Scraping Scams</h3>
+                <p><strong>The setup:</strong></p>
+                <ul>
+                    <li>"Build email list of 1,000 potential customers" (seems like normal VA task)</li>
+                    <li>You research, compile quality contacts with names, emails, companies</li>
+                    <li>Send completed list → client ghosts, never pays</li>
+                    <li>They got the valuable data (worth ₱10k-50k), you got nothing</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Data collection scam signs:</strong></p>
+                <ul>
+                    <li><strong>High value deliverable:</strong> Curated email lists, contact databases worth money themselves</li>
+                    <li><strong>No advance payment:</strong> "Pay after delivery" for data that has immediate resale value</li>
+                    <li><strong>Vague end use:</strong> Won't explain what list will be used for</li>
+                    <li><strong>Excessive volume:</strong> "Collect 10,000 emails" (too big for small client)</li>
+                    <li><strong>New client, big project:</strong> First job is huge data collection task</li>
+                    <li><strong>Specific criteria:</strong> "Tech startup CTOs with 50+ employees" (valuable niche data)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Protect your research:</strong></p>
+                <ul>
+                    <li><strong>50% advance minimum:</strong> For data collection projects (data has immediate value)</li>
+                    <li><strong>Milestone delivery:</strong> Send in batches: 100 contacts → get paid → 100 more</li>
+                    <li><strong>Watermark deliverables:</strong> First batch = sample with some fake entries mixed in</li>
+                    <li><strong>Use escrow:</strong> Full payment held before sharing complete list</li>
+                    <li><strong>Contract with usage terms:</strong> Specify they can't resell your research</li>
+                    <li><strong>Start small:</strong> First project = 50-100 contacts to verify payment</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">📱</span> OTP/2FA Code Phishing</h3>
+                <p><strong>New sophisticated scam:</strong></p>
+                <ul>
+                    <li>Scammer tries to login to YOUR account (bank, email, social media)</li>
+                    <li>You receive OTP code via SMS</li>
+                    <li>Scammer calls/messages posing as support: "We sent verification code, what is it?"</li>
+                    <li>You share code thinking it's legit → they immediately access your account</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 OTP scam tactics:</strong></p>
+                <ul>
+                    <li><strong>"Account verification":</strong> "For security, confirm the code we sent"</li>
+                    <li><strong>"System error":</strong> "Our system failed, can you read us the code?"</li>
+                    <li><strong>"Delivery confirmation":</strong> "Package needs OTP to proceed"</li>
+                    <li><strong>Urgency pressure:</strong> "Code expires in 60 seconds, quick!"</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ OTP safety rules:</strong></p>
+                <ul>
+                    <li><strong>NEVER share OTP codes:</strong> Not to anyone, for any reason, ever!</li>
+                    <li><strong>OTP is for YOU only:</strong> It verifies YOU are logging in, not someone else</li>
+                    <li><strong>Unexpected OTP?:</strong> If you didn't try to login, someone's trying to hack you!</li>
+                    <li><strong>Change password immediately:</strong> If receiving OTPs you didn't request</li>
+                    <li><strong>Legit companies never ask:</strong> For OTP codes via call, email, or message</li>
+                </ul>
+            </div>
+            
+            <div class="card safe-practice">
+                <h3><span class="icon">🛡️</span> Data Protection Best Practices</h3>
+                <ul>
+                    <li><strong>Progressive disclosure:</strong> Share minimum info at each stage (name → resume → references → IDs)</li>
+                    <li><strong>Watermark IDs:</strong> "FOR [COMPANY] ONLY - NOT VALID FOR OTHER USE" across documents</li>
+                    <li><strong>Separate work email:</strong> Professional email distinct from personal</li>
+                    <li><strong>Use aliases:</strong> Google Voice number for job applications, not personal phone</li>
+                    <li><strong>Monitor credit regularly:</strong> Check creditinfo.com.ph quarterly for identity theft</li>
+                    <li><strong>Never pre-install software:</strong> Before verification and written job offer</li>
+                    <li><strong>Scan all downloads:</strong> VirusTotal.com before opening files</li>
+                    <li><strong>Read permissions carefully:</strong> What access are you really granting?</li>
+                    <li><strong>Revoke old access:</strong> Remove API keys, app permissions from past jobs</li>
+                    <li><strong>Keep antivirus updated:</strong> Real-time protection always on</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">⚠️</span> If Your Data Is Compromised</h3>
+                <p><strong>Immediate actions:</strong></p>
+                <ul>
+                    <li><strong>Change all passwords:</strong> Bank, email, social media, platforms - everything</li>
+                    <li><strong>Enable 2FA everywhere:</strong> Add extra security layer immediately</li>
+                    <li><strong>Alert your bank:</strong> Notify of potential fraud, monitor transactions</li>
+                    <li><strong>Credit freeze:</strong> Contact credit bureaus to freeze your credit report</li>
+                    <li><strong>Monitor accounts daily:</strong> Watch for unauthorized access, strange activity</li>
+                    <li><strong>Report identity theft:</strong> NBI Cybercrime, PNP Anti-Cybercrime, local police</li>
+                    <li><strong>Document everything:</strong> Screenshots, emails, messages with scammer</li>
+                    <li><strong>Alert contacts:</strong> If email compromised, warn your contacts about potential spam</li>
+                    <li><strong>Scan for malware:</strong> Full system scan with updated antivirus</li>
+                    <li><strong>Consider new accounts:</strong> New email, new phone number if heavily compromised</li>
+                </ul>
+            </div>
+            
+            <div class="warning-card" style="margin-top: 2%;">
+                <h3 style="margin-bottom: 1%;">🎯 Data Protection Golden Rules</h3>
+                <p style="font-size: 0.85rem;">
+                    1️⃣ Your data has VALUE - protect it like money<br>
+                    2️⃣ Share progressively: basic info first, IDs only after written offer<br>
+                    3️⃣ Watermark ALL documents you share during hiring<br>
+                    4️⃣ Never install unknown software - even if "required"<br>
+                    5️⃣ Never share OTP codes - they're for YOU only<br>
+                    6️⃣ Never send source files as portfolio samples<br>
+                    7️⃣ If they need your data before offering job = 🚩 RED FLAG
+                </p>
+            </div>
+        </div>
+        
+        <div id="techva-scams" class="content">
+            <div class="warning-card">
+                <h3 style="margin-bottom: 1%;">⚙️ Tech VA Specific Scams (2026)</h3>
+                <p style="font-size: 0.85rem;">Technical VAs face unique scams targeting software access, client data, automation tools, and social media management. Know the tech-specific red flags!</p>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🔧</span> Fake SaaS Trial Scams</h3>
+                <p><strong>How it works:</strong></p>
+                <ul>
+                    <li>"Test our new VA automation tool - free trial!"</li>
+                    <li>You sign up, connect your email, calendar, social media accounts</li>
+                    <li>Tool asks for permissions: "Access contacts, read emails, post on behalf"</li>
+                    <li>Suddenly: Tool steals your CLIENT DATA, scrapes email lists, posts spam</li>
+                    <li>Your client's data is compromised because you connected untrusted tool</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Fake SaaS red flags:</strong></p>
+                <ul>
+                    <li><strong>Never heard of it:</strong> Unknown tool with no reviews, no established users</li>
+                    <li><strong>Excessive permissions:</strong> Wants access to everything (email + contacts + calendar + social)</li>
+                    <li><strong>Too good to be true:</strong> "AI that does ALL your VA work automatically" (impossible!)</li>
+                    <li><strong>Free forever:</strong> No pricing page, no business model (how do they make money?)</li>
+                    <li><strong>Poor website:</strong> Unprofessional design, grammar errors, no company info</li>
+                    <li><strong>Requires payment info:</strong> For "free trial" but charges hidden fees</li>
+                    <li><strong>Can't revoke access:</strong> No clear way to disconnect accounts later</li>
+                    <li><strong>Pushy signup:</strong> Pop-ups, urgency ("Only 50 spots left!")</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Safe SaaS practices:</strong></p>
+                <ul>
+                    <li><strong>Stick to established tools:</strong> Zapier, IFTTT, Buffer, Hootsuite (known reputation)</li>
+                    <li><strong>Research thoroughly:</strong> Google "[tool name] review", check ProductHunt, G2, Capterra</li>
+                    <li><strong>Read permissions carefully:</strong> What EXACTLY are you allowing? (view vs edit vs post)</li>
+                    <li><strong>Use test accounts:</strong> Don't connect real client accounts - create demo accounts first</li>
+                    <li><strong>Minimum permissions:</strong> Only grant what's absolutely necessary</li>
+                    <li><strong>Regular audits:</strong> Review connected apps monthly, revoke unused access</li>
+                    <li><strong>Client permission:</strong> Get written OK before connecting their accounts to ANY tool</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🔌</span> Malicious Plugin/Extension Scams</h3>
+                <p><strong>The trap:</strong></p>
+                <ul>
+                    <li>"Install this Chrome extension to track your productivity"</li>
+                    <li>"Use our browser plugin for social media scheduling"</li>
+                    <li>Extension looks helpful but actually: Tracks everything you type (passwords!), screenshots your work, steals cookies/sessions</li>
+                    <li>Can access ALL websites you visit, not just work sites</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Malicious plugin signs:</strong></p>
+                <ul>
+                    <li><strong>Not in official store:</strong> "Download from our website" not Chrome Web Store/Firefox Add-ons</li>
+                    <li><strong>Few users/reviews:</strong> Legitimate plugins have thousands of users, hundreds of reviews</li>
+                    <li><strong>Excessive permissions:</strong> "Read and change all your data on all websites" (huge red flag!)</li>
+                    <li><strong>Recent creation:</strong> Published last month with 5-star reviews (fake reviews)</li>
+                    <li><strong>Similar name:</strong> "Grammarly Pro" instead of real "Grammarly" (typosquatting)</li>
+                    <li><strong>No company info:</strong> Unknown developer, no website, no contact</li>
+                    <li><strong>Requires payment info:</strong> For "free" extension</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Safe browser extension practices:</strong></p>
+                <ul>
+                    <li><strong>Official stores only:</strong> Chrome Web Store, Firefox Add-ons, Microsoft Edge Add-ons</li>
+                    <li><strong>Check permissions:</strong> Read what access you're granting before installing</li>
+                    <li><strong>Verify developer:</strong> Click developer name - should have multiple reputable extensions</li>
+                    <li><strong>Read recent reviews:</strong> Sort by "most recent" - any complaints about malware/spam?</li>
+                    <li><strong>Research first:</strong> Google "[extension name] safe?" before installing</li>
+                    <li><strong>Minimum extensions:</strong> Only install what you absolutely need</li>
+                    <li><strong>Regular cleanup:</strong> Remove unused extensions monthly</li>
+                    <li><strong>Use profiles:</strong> Separate browser profile for work vs personal</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🔑</span> Social Media Account Takeover Scams</h3>
+                <p><strong>Common scenarios:</strong></p>
+                <ul>
+                    <li><strong>Fake audit request:</strong> "Connect your client's Instagram so we can audit engagement" → steals account</li>
+                    <li><strong>Growth service scam:</strong> "Give us login to grow followers" → changes password, holds account ransom</li>
+                    <li><strong>Verification badge scam:</strong> "Get verified! Just provide admin access" → takes over account</li>
+                    <li><strong>Copyright strike fake:</strong> "Your account flagged, verify here" → phishing page steals login</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Account takeover red flags:</strong></p>
+                <ul>
+                    <li><strong>Asks for password:</strong> Legitimate tools use OAuth, never need actual password</li>
+                    <li><strong>No 2FA support:</strong> Won't work with two-factor authentication enabled</li>
+                    <li><strong>Direct login required:</strong> "Log in through our site" instead of official Facebook/Instagram</li>
+                    <li><strong>Disable security:</strong> "Turn off 2FA temporarily for this to work"</li>
+                    <li><strong>Unknown growth service:</strong> Not established company (not Hootsuite, Buffer, Later, etc.)</li>
+                    <li><strong>Guaranteed results:</strong> "Get 10k followers in 7 days guaranteed" (fake/bot followers)</li>
+                    <li><strong>Upfront payment:</strong> Pay before seeing any results</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Safe social media management:</strong></p>
+                <ul>
+                    <li><strong>Use Business Manager:</strong> Facebook Business Manager, Instagram Professional - add yourself as admin</li>
+                    <li><strong>Never share passwords:</strong> Client adds you as account manager, you don't need password</li>
+                    <li><strong>Use scheduling tools:</strong> Buffer, Hootsuite, Later - connect via OAuth (official authorization)</li>
+                    <li><strong>Limited permissions:</strong> Request "Editor" not "Admin" access when possible</li>
+                    <li><strong>Enable 2FA:</strong> On all client accounts you manage</li>
+                    <li><strong>Document access:</strong> Contract specifies what access you have and why</li>
+                    <li><strong>Return access properly:</strong> When job ends, client removes your access (don't just "log out")</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">📊</span> Analytics & Ad Account Scams</h3>
+                <p><strong>The scam:</strong></p>
+                <ul>
+                    <li>"Optimize your client's Google Ads - just give us account access"</li>
+                    <li>You grant access → they run ads to THEIR products using YOUR CLIENT's budget</li>
+                    <li>Or: Steal credit card info, conversion data, customer lists from ad account</li>
+                    <li>Client's ad budget drained, you're responsible</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Ad account scam signs:</strong></p>
+                <ul>
+                    <li><strong>Admin access required:</strong> Real optimization only needs "Standard" or "Read-only"</li>
+                    <li><strong>Before discussing strategy:</strong> Wants access before explaining what they'll do</li>
+                    <li><strong>Unknown agency:</strong> No verifiable track record, no case studies</li>
+                    <li><strong>Guaranteed ROI:</strong> "We guarantee 500% ROAS" (no one can guarantee!)</li>
+                    <li><strong>Immediate access request:</strong> "Give access now, we'll audit later"</li>
+                    <li><strong>No contract:</strong> Won't sign formal agreement with terms</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Safe ad management practices:</strong></p>
+                <ul>
+                    <li><strong>Client permission FIRST:</strong> Written approval before granting any account access</li>
+                    <li><strong>Minimum access level:</strong> Read-only for reporting, Standard for optimization (not Admin)</li>
+                    <li><strong>Use official systems:</strong> Google Ads Manager, Facebook Business Manager</li>
+                    <li><strong>Monitor spending:</strong> Set up budget alerts, daily spending caps</li>
+                    <li><strong>Regular audits:</strong> Review account access list monthly, remove unused users</li>
+                    <li><strong>Separate billing:</strong> Never add your credit card to client's ad account</li>
+                    <li><strong>Track changes:</strong> Enable change history, review who did what</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🌐</span> Website/Domain Access Scams</h3>
+                <p><strong>How they operate:</strong></p>
+                <ul>
+                    <li>"We need WordPress admin access to fix SEO issues"</li>
+                    <li>You give access → they install malware, steal customer data, hold site ransom</li>
+                    <li>Or: "Transfer domain to us for better management" → steal domain entirely</li>
+                    <li>Client's website down, you're liable</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Website access scam red flags:</strong></p>
+                <ul>
+                    <li><strong>Admin access first:</strong> Asks for full admin before explaining what they'll do</li>
+                    <li><strong>FTP/cPanel access:</strong> Needs server access for "simple SEO fixes" (excessive!)</li>
+                    <li><strong>Domain transfer:</strong> Wants domain transferred to their account "for convenience"</li>
+                    <li><strong>Unknown service:</strong> Not established company (not Cloudflare, Sucuri, WP Engine, etc.)</li>
+                    <li><strong>Cheap offer:</strong> "Full website security for ₱500/month" (real services ₱2k-10k)</li>
+                    <li><strong>Disable security:</strong> "Turn off firewall so we can work"</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Safe website management:</strong></p>
+                <ul>
+                    <li><strong>Limited user roles:</strong> Create "Editor" account, not "Administrator" for contractors</li>
+                    <li><strong>Activity logs:</strong> Use plugins like WP Activity Log to track all changes</li>
+                    <li><strong>Regular backups:</strong> Automatic daily backups before granting any access (UpdraftPlus, BackupBuddy)</li>
+                    <li><strong>Client retains domain:</strong> Domain should always be in client's registrar account, not yours</li>
+                    <li><strong>Use staging site:</strong> Test changes on staging before touching live site</li>
+                    <li><strong>2FA on admin:</strong> Require two-factor for all admin accounts</li>
+                    <li><strong>Revoke access promptly:</strong> When contractor done, delete their user account immediately</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">📧</span> Email Marketing List Theft</h3>
+                <p><strong>The scam:</strong></p>
+                <ul>
+                    <li>Hired to "manage email campaigns" for client</li>
+                    <li>Get access to MailChimp/Constant Contact with 50k subscriber list</li>
+                    <li>"Client" ghosts after you export the list for "campaign planning"</li>
+                    <li>They got valuable email list (worth ₱50k-500k), you worked for free</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Email list theft signs:</strong></p>
+                <ul>
+                    <li><strong>Export request early:</strong> "Download full list first for analysis" before any real work</li>
+                    <li><strong>Unusual focus on list:</strong> More interested in subscriber data than campaign performance</li>
+                    <li><strong>New client, big list:</strong> First project managing 50k+ subscriber list (high value)</li>
+                    <li><strong>No advance payment:</strong> For work that involves handling valuable data</li>
+                    <li><strong>Vague campaign goals:</strong> Not clear what emails will actually promote</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Email marketing protection:</strong></p>
+                <ul>
+                    <li><strong>Never export full lists:</strong> Work within platform (MailChimp, ConvertKit) - don't download CSV</li>
+                    <li><strong>Segment-only access:</strong> Client creates segments you need, you don't see full list</li>
+                    <li><strong>50% advance payment:</strong> For email marketing projects (data has value)</li>
+                    <li><strong>NDA with penalties:</strong> Contract specifies you can't export or use client's lists</li>
+                    <li><strong>Platform-based work:</strong> Create campaigns in MailChimp directly, no exports needed</li>
+                    <li><strong>Audit trail:</strong> Email platforms log all exports - client can verify you didn't steal</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🤖</span> Automation Script/Bot Scams</h3>
+                <p><strong>The setup:</strong></p>
+                <ul>
+                    <li>"Create Python script to automate our workflow"</li>
+                    <li>You build custom automation tool (real work!)</li>
+                    <li>Deliver working script → client ghosts</li>
+                    <li>They got custom software worth ₱20k-100k, you got nothing</li>
+                    <li>Worse: They resell YOUR script to others</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Code theft red flags:</strong></p>
+                <ul>
+                    <li><strong>Full delivery upfront:</strong> "Send complete script, we'll test and pay" (they won't pay)</li>
+                    <li><strong>No advance payment:</strong> For custom development work</li>
+                    <li><strong>Vague requirements:</strong> "Build something like X" (they'll use it beyond original scope)</li>
+                    <li><strong>Resale potential:</strong> Generic tool many companies would want (high resale value)</li>
+                    <li><strong>New client, big project:</strong> First job is complex automation worth ₱50k+</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Code protection strategies:</strong></p>
+                <ul>
+                    <li><strong>Milestone payments:</strong> 30% upfront, 40% mid-development, 30% on delivery</li>
+                    <li><strong>Watermarked demo first:</strong> Show working demo with limitations before full delivery</li>
+                    <li><strong>Escrow for large projects:</strong> Full payment held before sharing source code</li>
+                    <li><strong>License agreement:</strong> Contract specifies single-use, no resale rights</li>
+                    <li><strong>Obfuscate code:</strong> For demos, make code hard to read (deobfuscate after payment)</li>
+                    <li><strong>SaaS model instead:</strong> Host the tool, they access via API (you retain code)</li>
+                    <li><strong>Copyright notice:</strong> Comment header: "© 2026 [Your Name] - Licensed to [Client] only"</li>
+                </ul>
+            </div>
+            
+            <div class="card safe-practice">
+                <h3><span class="icon">🛡️</span> Tech VA Protection Checklist</h3>
+                <ul>
+                    <li><strong>Client permission for ALL access:</strong> Get written approval before connecting any tool to client accounts</li>
+                    <li><strong>Minimum permissions always:</strong> Request lowest access level needed (viewer > editor > admin)</li>
+                    <li><strong>Use test accounts:</strong> Never connect real client data to untested tools</li>
+                    <li><strong>Regular access audits:</strong> Review connected apps, extensions, users monthly</li>
+                    <li><strong>Document all access:</strong> Spreadsheet tracking what tools have access to what accounts</li>
+                    <li><strong>Revoke immediately:</strong> When project ends, remove all access same day</li>
+                    <li><strong>Official tools only:</strong> Stick to established platforms (Zapier, Buffer, Hootsuite)</li>
+                    <li><strong>Read permissions carefully:</strong> Before clicking "Allow" - what are you actually granting?</li>
+                    <li><strong>Never share passwords:</strong> Use OAuth, Business Manager invites, not password sharing</li>
+                    <li><strong>Backup before changes:</strong> Always backup website/data before major modifications</li>
+                    <li><strong>Enable 2FA everywhere:</strong> All client accounts you manage should have two-factor auth</li>
+                    <li><strong>Separate work browser:</strong> Different browser/profile for client work vs personal</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">⚙️</span> Safe Tech Stack for VAs (2026)</h3>
+                <p><strong>Trusted tools (verified safe):</strong></p>
+                <ul>
+                    <li><strong>Social Media:</strong> Buffer, Hootsuite, Later, Meta Business Suite</li>
+                    <li><strong>Automation:</strong> Zapier, IFTTT, Make (Integromat)</li>
+                    <li><strong>Email Marketing:</strong> MailChimp, ConvertKit, Constant Contact</li>
+                    <li><strong>Project Management:</strong> Asana, Trello, Monday.com, ClickUp</li>
+                    <li><strong>Time Tracking:</strong> Toggl, Harvest, Clockify</li>
+                    <li><strong>Design:</strong> Canva, Adobe Creative Cloud, Figma</li>
+                    <li><strong>Analytics:</strong> Google Analytics, Hotjar, Mixpanel</li>
+                    <li><strong>Password Management:</strong> 1Password, LastPass, Bitwarden</li>
+                    <li><strong>File Storage:</strong> Google Drive, Dropbox, OneDrive</li>
+                    <li><strong>Communication:</strong> Slack, Microsoft Teams, Zoom</li>
+                </ul>
+                <p style="margin-top: 1%; color: #f39c12;"><strong>⚠️ If client asks for unfamiliar tool:</strong> Research thoroughly, check reviews, verify company, test with dummy account first!</p>
+            </div>
+            
+            <div class="warning-card" style="margin-top: 2%;">
+                <h3 style="margin-bottom: 1%;">🎯 Tech VA Golden Rules</h3>
+                <p style="font-size: 0.85rem;">
+                    1️⃣ Client permission BEFORE connecting any tool<br>
+                    2️⃣ Minimum permissions only - never more than needed<br>
+                    3️⃣ Test with dummy accounts first - never live client data<br>
+                    4️⃣ Never share passwords - use OAuth/Business Manager<br>
+                    5️⃣ Backup before changes - always have rollback plan<br>
+                    6️⃣ Audit access monthly - remove old connections<br>
+                    7️⃣ Unknown tool = RED FLAG - stick to established platforms
+                </p>
+            </div>
+        </div>
+        
+        <div id="redflags" class="content">
+            <div class="warning-card">
+                <h3 style="margin-bottom: 1%;">🚩 Advanced Red Flags - Expert-Level Detection</h3>
+                <p style="font-size: 0.85rem;">Beyond obvious scams - these are sophisticated tactics used by professional scammers. If you spot these, WALK AWAY immediately!</p>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🌐</span> VPN + Burner Email = Untraceable Scammer</h3>
+                <p><strong>What to watch for:</strong></p>
+                <ul>
+                    <li>Client claims to be in "New York" but IP location shows Singapore, then Romania, then Brazil (VPN hopping)</li>
+                    <li>Email: tempmail123@protonmail.com or randomstring@guerrillamail.com (disposable)</li>
+                    <li>Phone number from VoIP service (Google Voice, TextNow) not real carrier</li>
+                    <li>Changes timezone constantly in communication patterns</li>
+                    <li>Can't video call "camera broken" but really hiding true location/identity</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Why this is dangerous:</strong></p>
+                <ul>
+                    <li><strong>Completely untraceable:</strong> VPN masks real location, burner email can't be tracked back</li>
+                    <li><strong>Professional scammer:</strong> Using anti-detection tools = they do this often</li>
+                    <li><strong>No recourse:</strong> If scammed, impossible to find them or report to authorities</li>
+                    <li><strong>Multiple identities:</strong> Probably running 20+ scams simultaneously</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ How to detect:</strong></p>
+                <ul>
+                    <li><strong>Check email domain:</strong> Temporary email services (10minutemail, guerrillamail, tempmail) = instant red flag</li>
+                    <li><strong>Reverse phone lookup:</strong> Use TrueCaller - VoIP numbers show as "spam risk"</li>
+                    <li><strong>IP inconsistency:</strong> If using Zoom/Skype, check their reported location vs claimed location</li>
+                    <li><strong>Ask for company phone:</strong> Real companies have landline/corporate number, not just mobile</li>
+                    <li><strong>Insist on video call:</strong> See if background/accent matches claimed location</li>
+                    <li><strong>LinkedIn deep check:</strong> Profile location should match communication timezone patterns</li>
+                </ul>
+                <p style="margin-top: 1%; color: #d63031;"><strong>⚠️ Action:</strong> If you spot VPN + burner combo, don't even respond. Block and report immediately.</p>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">👻</span> No Digital Footprint - Ghost Company</h3>
+                <p><strong>The pattern:</strong></p>
+                <ul>
+                    <li>Company website exists BUT:
+                        <ul style="margin-left: 5%; margin-top: 0.5%;">
+                            <li>Domain registered 2-4 weeks ago (WHOIS check)</li>
+                            <li>Zero mentions in Google News</li>
+                            <li>No social media presence (or accounts created last month)</li>
+                            <li>No employee LinkedIn profiles</li>
+                            <li>No reviews anywhere (Google, Glassdoor, Trustpilot)</li>
+                            <li>Address on Google Maps shows empty lot/residential</li>
+                        </ul>
+                    </li>
+                    <li>When you search company name: ONLY their own website appears, nothing else</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Ghost company indicators:</strong></p>
+                <ul>
+                    <li><strong>New domain, old claims:</strong> Site says "Since 2015" but domain created January 2026</li>
+                    <li><strong>Stock photos everywhere:</strong> Team photos from Unsplash, office from Shutterstock</li>
+                    <li><strong>Generic content:</strong> "We provide innovative solutions" (says nothing specific)</li>
+                    <li><strong>No press mentions:</strong> Real companies appear in industry blogs, news, podcasts</li>
+                    <li><strong>No client testimonials:</strong> Or testimonials with no verifiable people</li>
+                    <li><strong>Perfect SEO:</strong> Website TOO polished for brand new company</li>
+                    <li><strong>No business registration:</strong> Can't find in SEC, DTI, or government databases</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Digital footprint verification:</strong></p>
+                <ul>
+                    <li><strong>WHOIS domain age:</strong> whois.com - Real companies usually 2+ years old</li>
+                    <li><strong>Google News search:</strong> "[Company name]" in quotes - any articles?</li>
+                    <li><strong>LinkedIn employee count:</strong> Real companies have employees with established profiles</li>
+                    <li><strong>Wayback Machine:</strong> archive.org - check if site existed 6 months ago</li>
+                    <li><strong>Google Maps Street View:</strong> Verify office address is real commercial building</li>
+                    <li><strong>Business registry:</strong> SEC.gov.ph, DTI - is company officially registered?</li>
+                    <li><strong>Social media activity:</strong> Posts should span months/years with organic engagement</li>
+                </ul>
+                <p style="margin-top: 1%; color: #27ae60;"><strong>💡 Good sign:</strong> Company appears in multiple independent sources (news, reviews, forums, social media) from different dates.</p>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🔄</span> Rotating Recruiters - Inconsistent Story</h3>
+                <p><strong>The scam tactic:</strong></p>
+                <ul>
+                    <li>First contact: Sarah from HR (sarah@company.com)</li>
+                    <li>Second message: Mike from Recruitment (mike@company.com)</li>
+                    <li>Interview with: Jennifer, "Hiring Manager" (jennifer@gmail.com - wait, what?)</li>
+                    <li>Final offer from: David, "CEO" (different writing style, different timezone)</li>
+                    <li>Stories don't match, details contradict, no one knows what others said</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Rotating recruiter red flags:</strong></p>
+                <ul>
+                    <li><strong>Different email domains:</strong> Sarah@company.com → Jennifer@gmail.com (inconsistent)</li>
+                    <li><strong>Contradicting information:</strong> Sarah says "remote forever", Mike says "office 3x week"</li>
+                    <li><strong>No introduction:</strong> New person appears without "Sarah is looping me in" context</li>
+                    <li><strong>Timezone jumps:</strong> Morning person Sarah → night owl Mike (same company?)</li>
+                    <li><strong>Writing style changes:</strong> Perfect English → broken English → perfect again</li>
+                    <li><strong>Can't reference previous:</strong> Ask "What did Sarah say about start date?" - they don't know</li>
+                    <li><strong>No team consistency:</strong> Can't get same person twice in a row</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🔍 Why this happens:</strong></p>
+                <ul>
+                    <li>Scam operation with multiple people using same "company"</li>
+                    <li>Stolen/compromised accounts from different people</li>
+                    <li>Outsourced scamming - different workers on different shifts</li>
+                    <li>No coordination because it's not a real company</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Verification tactics:</strong></p>
+                <ul>
+                    <li><strong>Ask for consistency:</strong> "Can all communication go through Sarah?"</li>
+                    <li><strong>Reference previous conversations:</strong> "As Sarah mentioned..." - see if they know</li>
+                    <li><strong>Request team meeting:</strong> "Can I meet Sarah and Mike together?" - scammers will refuse</li>
+                    <li><strong>Check LinkedIn:</strong> Do Sarah and Mike both work at company with connections to each other?</li>
+                    <li><strong>Call company directly:</strong> Ask operator to transfer to Sarah/Mike - do they exist?</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🤫</span> Pressure + Isolation Tactics</h3>
+                <p><strong>Manipulative language:</strong></p>
+                <ul>
+                    <li>"Don't tell anyone about this opportunity - it's confidential" (isolating you)</li>
+                    <li>"Only share with us, not other recruiters - exclusive contract" (controlling information)</li>
+                    <li>"This is a secret project, can't discuss publicly" (preventing you from researching)</li>
+                    <li>"Delete our emails after reading - company policy" (hiding evidence)</li>
+                    <li>"We're moving fast, need decision in 24 hours" (pressure + urgency)</li>
+                    <li>"You're the only candidate we want" (making you feel special to lower guard)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 Why scammers isolate you:</strong></p>
+                <ul>
+                    <li><strong>Prevents research:</strong> Can't ask friends/family who might spot red flags</li>
+                    <li><strong>Stops verification:</strong> Can't post in forums "Is Company X legit?"</li>
+                    <li><strong>Creates urgency:</strong> Rush you before you think clearly</li>
+                    <li><strong>Removes support:</strong> No second opinions to challenge their story</li>
+                    <li><strong>Hides evidence:</strong> If you delete emails, no proof for reporting</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Counter-tactics:</strong></p>
+                <ul>
+                    <li><strong>Never keep secrets:</strong> Legitimate jobs aren't "confidential" during hiring</li>
+                    <li><strong>Share with trusted person:</strong> Always tell friend/family about new opportunity</li>
+                    <li><strong>Take your time:</strong> "I need 3 days to consider" - real companies wait</li>
+                    <li><strong>Research openly:</strong> Post in forums, Google the company, ask around</li>
+                    <li><strong>Keep all evidence:</strong> Never delete emails, messages, or documents</li>
+                    <li><strong>Trust your instinct:</strong> If "don't tell anyone" feels wrong, it IS wrong</li>
+                </ul>
+                <p style="margin-top: 1%; color: #d63031;"><strong>⚠️ MAJOR RED FLAG:</strong> Any request to keep job opportunity "secret" = scam. Real employers never ask this!</p>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🤖</span> AI-Perfect English = ChatGPT-Generated Messages</h3>
+                <p><strong>The tell-tale signs:</strong></p>
+                <ul>
+                    <li>Every message is grammatically perfect (no typos, no casual shortcuts)</li>
+                    <li>Overly formal: "I hope this message finds you well" (who talks like this?)</li>
+                    <li>Generic responses: Could apply to anyone, nothing personalized</li>
+                    <li>Long paragraphs: Real people write short messages, AI writes essays</li>
+                    <li>Unnatural flow: Sentences connect oddly, like a robot wrote it</li>
+                    <li>No personality: Bland, corporate, no human warmth or humor</li>
+                    <li>Copy-paste feel: Same structure every message (intro → body → closing)</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🚩 AI message red flags:</strong></p>
+                <ul>
+                    <li><strong>Template language:</strong> "We are pleased to inform you..." (AI default phrasing)</li>
+                    <li><strong>Bullet points everywhere:</strong> AI loves structured lists (like this!)</li>
+                    <li><strong>No contractions:</strong> "We are" not "We're", "I am" not "I'm" (too formal)</li>
+                    <li><strong>Repetitive structure:</strong> Every message follows same pattern</li>
+                    <li><strong>Generic praise:</strong> "Your impressive background" but doesn't mention specifics</li>
+                    <li><strong>Instant responses:</strong> Replies in 30 seconds with perfect 3-paragraph answer</li>
+                    <li><strong>No questions answered:</strong> Responds but doesn't actually address what you asked</li>
+                    <li><strong>Buzzword soup:</strong> "Synergize innovative solutions to optimize dynamic paradigms"</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Test if it's AI:</strong></p>
+                <ul>
+                    <li><strong>Ask specific question:</strong> "What's the weather like in your office today?" - AI gives generic answer</li>
+                    <li><strong>Reference something random:</strong> "Loved your comment about basketball" (you made it up) - AI might play along</li>
+                    <li><strong>Use casual language:</strong> Real people mirror your tone; AI stays formal</li>
+                    <li><strong>Ask opinion:</strong> "What's your favorite part about working there?" - AI gives corporate answer</li>
+                    <li><strong>Make small typo:</strong> Real people might correct or ignore; AI generates perfect response anyway</li>
+                    <li><strong>Use GPTZero:</strong> Copy message text, paste into GPTZero.me to check if AI-generated</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>🔍 Why scammers use AI:</strong></p>
+                <ul>
+                    <li><strong>Scale:</strong> One scammer can message 1,000 people/day with ChatGPT</li>
+                    <li><strong>Languages:</strong> AI writes perfect English even if scammer doesn't speak it</li>
+                    <li><strong>Professional appearance:</strong> Looks legitimate, builds false trust</li>
+                    <li><strong>No effort:</strong> Copy-paste your resume into ChatGPT, get personalized scam message</li>
+                </ul>
+                <p style="margin-top: 1%; color: #f39c12;"><strong>💡 Remember:</strong> In 2026, TOO PERFECT = SUSPICIOUS. Real humans make typos, use casual language, have personality!</p>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">📍</span> Location & Timezone Red Flags</h3>
+                <p><strong>Geographic inconsistencies:</strong></p>
+                <ul>
+                    <li><strong>Claims US company:</strong> But emails arrive at 3am EST consistently (overseas scammer)</li>
+                    <li><strong>Meeting times weird:</strong> "Let's meet 2am your time" without acknowledging it's unusual</li>
+                    <li><strong>Holiday mismatches:</strong> Says US company but working on US Thanksgiving/Christmas</li>
+                    <li><strong>Spelling inconsistencies:</strong> Switches between "color" (US) and "colour" (UK)</li>
+                    <li><strong>Currency confusion:</strong> Talks about payment in USD but mentions "pounds" or "euros" casually</li>
+                    <li><strong>IP location mismatch:</strong> LinkedIn says NYC, Zoom shows connecting from Lagos</li>
+                </ul>
+                <p style="margin-top: 1%;"><strong>✅ Verification:</strong></p>
+                <ul>
+                    <li><strong>Check email headers:</strong> Shows server location (Gmail → Show Original)</li>
+                    <li><strong>Note response times:</strong> Pattern reveals true timezone</li>
+                    <li><strong>Ask local questions:</strong> "How's the subway today?" if they claim NYC</li>
+                    <li><strong>Video call background:</strong> Does it match claimed location? (accent, visible items)</li>
+                </ul>
+            </div>
+            
+            <div class="card safe-practice">
+                <h3><span class="icon">🎯</span> Advanced Scammer Profile Recognition</h3>
+                <p><strong>Common scammer personas (2026):</strong></p>
+                <ul>
+                    <li><strong>"The Urgent Executive":</strong> Claims to be CEO/VP, needs help NOW, too busy for video, pays premium for speed</li>
+                    <li><strong>"The Crypto Bro":</strong> Web3 company, pays only in crypto, talks about "the future", vague business model</li>
+                    <li><strong>"The Smooth Talker":</strong> Overly friendly, "you're perfect!", makes big promises, builds false rapport quickly</li>
+                    <li><strong>"The Ghost Manager":</strong> Hires you, then disappears, no training, vague tasks, resurfaces only for demands</li>
+                    <li><strong>"The Serial Starter":</strong> Always "just launching", needs help "setting up", never actually operates</li>
+                    <li><strong>"The Opportunity Hoarder":</strong> Multiple "amazing opportunities", pressure to choose, all equally vague</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">⚡</span> Combined Red Flags = Immediate Exit</h3>
+                <p><strong>If you see 3+ of these together, STOP immediately:</strong></p>
+                <ul>
+                    <li>✗ VPN/burner email + No digital footprint</li>
+                    <li>✗ Rotating recruiters + Pressure tactics</li>
+                    <li>✗ AI-perfect messages + Generic job description</li>
+                    <li>✗ Too-good salary + Crypto-only payment</li>
+                    <li>✗ Urgency + Won't video call</li>
+                    <li>✗ New domain + Perfect website</li>
+                    <li>✗ Asks for ID + Before written offer</li>
+                    <li>✗ Confidentiality request + Upfront payment</li>
+                </ul>
+                <p style="margin-top: 1%; color: #d63031;"><strong>⚠️ Multiple red flags = Professional scammer. Do not proceed, do not negotiate, just block and report.</strong></p>
+            </div>
+            
+            <div class="warning-card" style="margin-top: 2%;">
+                <h3 style="margin-bottom: 1%;">🎯 Advanced Detection Principles</h3>
+                <p style="font-size: 0.85rem;">
+                    🔍 <strong>Verify everything independently</strong> - Don't rely on what they tell you<br>
+                    🕐 <strong>Take your time</strong> - Scammers rush, real employers wait<br>
+                    👥 <strong>Get second opinions</strong> - Share opportunity with trusted people<br>
+                    📱 <strong>Insist on video calls</strong> - See who you're really dealing with<br>
+                    🚨 <strong>Trust your gut</strong> - If it feels wrong, it usually is<br>
+                    📋 <strong>Document everything</strong> - Keep evidence for reporting<br>
+                    🛑 <strong>Don't rationalize red flags</strong> - One flag = caution, multiple = exit
+                </p>
+            </div>
+        </div>
+        
+        <div id="howto" class="content">
+            <div class="card red-flag">
+                <h3><span class="icon">🚩</span> Immediate Red Flags</h3>
+                <ul>
+                    <li>Job posting has spelling/grammar errors</li>
+                    <li>Salary is way above market rate</li>
+                    <li>Interview via text-only (no video/voice)</li>
+                    <li>Asks for bank details before job offer</li>
+                    <li>Email domain doesn't match company name</li>
+                    <li>Recruiter uses Gmail/Yahoo instead of company email</li>
+                    <li>Requests payment for background check/training</li>
+                    <li>Job description is vague or copied</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">⚡</span> Urgency & Pressure Tactics</h3>
+                <ul>
+                    <li>"We need someone to start IMMEDIATELY"</li>
+                    <li>"Limited spots available - decide now"</li>
+                    <li>"Your application expires in 24 hours"</li>
+                    <li>Rushing through interview process</li>
+                    <li>Pressure to provide personal info quickly</li>
+                    <li>"You're the only candidate we want"</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">💰</span> Payment & Money Red Flags</h3>
+                <ul>
+                    <li>Asked to pay for equipment/software upfront</li>
+                    <li>Check overpayment schemes</li>
+                    <li>Cryptocurrency-only payments</li>
+                    <li>Wire transfers to individuals (not companies)</li>
+                    <li>Payment through gift cards</li>
+                    <li>No clear payment terms or contract</li>
+                    <li>Payment platform you've never heard of</li>
+                </ul>
+            </div>
+            
+            <div class="card red-flag">
+                <h3><span class="icon">🤖</span> 2026-Specific AI Scams</h3>
+                <ul>
+                    <li>AI-generated voice calls claiming to be HR</li>
+                    <li>Deepfake video interviews with "executives"</li>
+                    <li>ChatGPT-written job descriptions (generic)</li>
+                    <li>AI-cloned company websites</li>
+                    <li>Synthetic identity fraud in applications</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="howto" class="content">
+            <div class="card">
+                <h3><span class="icon">📋</span> Step 1: Research the Company</h3>
+                <p><strong>Before applying:</strong></p>
+                <ul>
+                    <li>Google the company name + "scam" or "reviews"</li>
+                    <li>Check company website SSL certificate (🔒 in browser)</li>
+                    <li>Verify domain age (use whois.com - new domains are suspicious)</li>
+                    <li>Look up company on LinkedIn - check employee count & activity</li>
+                    <li>Search for company on Glassdoor, Indeed reviews</li>
+                    <li>Check business registration (SEC.gov for US companies)</li>
+                    <li>Verify physical address on Google Maps Street View</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">🔍</span> Step 2: Verify the Recruiter</h3>
+                <p><strong>During communication:</strong></p>
+                <ul>
+                    <li>Check recruiter's LinkedIn profile (connections, history, posts)</li>
+                    <li>Verify email domain matches official company website</li>
+                    <li>Call company's main line to confirm recruiter works there</li>
+                    <li>Reverse image search recruiter's profile photo</li>
+                    <li>Check if job posting appears on company's official careers page</li>
+                    <li>Ask for video call - watch for AI deepfakes (unnatural movements)</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">💬</span> Step 3: Secure Interview Process</h3>
+                <p><strong>During interviews:</strong></p>
+                <ul>
+                    <li>Insist on video call with camera on (not just audio)</li>
+                    <li>Ask specific questions about daily tasks & team structure</li>
+                    <li>Request to speak with potential team members</li>
+                    <li>Verify office location - ask about nearby landmarks</li>
+                    <li>Never share SSN, bank details, or ID scans before written offer</li>
+                    <li>Record meeting details: names, positions, dates</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">📄</span> Step 4: Review Contract Carefully</h3>
+                <p><strong>Before accepting:</strong></p>
+                <ul>
+                    <li>Get everything in writing (offer letter, contract, terms)</li>
+                    <li>Read entire contract - no skimming</li>
+                    <li>Verify payment terms, frequency, method</li>
+                    <li>Check for hidden fees or equipment purchase clauses</li>
+                    <li>Ask for clarification on vague language</li>
+                    <li>Have lawyer review if payment > $5000</li>
+                    <li>Never sign under pressure</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">💳</span> Step 5: Safe Payment Setup</h3>
+                <p><strong>Getting paid safely:</strong></p>
+                <ul>
+                    <li>Use established platforms: Upwork, Fiverr, PayPal Business</li>
+                    <li>Set up escrow for large projects (Escrow.com)</li>
+                    <li>Request milestone payments, not all upfront or all at end</li>
+                    <li>Never accept checks from unknown clients (can bounce)</li>
+                    <li>Avoid wire transfers until client is verified</li>
+                    <li>Use separate business bank account</li>
+                    <li>Document all payment agreements in writing</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">🛡️</span> Step 6: Protect Your Data</h3>
+                <p><strong>Information security:</strong></p>
+                <ul>
+                    <li>Only provide SSN/Tax ID after receiving written offer</li>
+                    <li>Use watermarked portfolio samples</li>
+                    <li>Never share passwords or access to personal accounts</li>
+                    <li>Use unique password for each client platform</li>
+                    <li>Enable 2FA on all work accounts</li>
+                    <li>Monitor credit report for identity theft</li>
+                    <li>Keep separate work email from personal email</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="tools" class="content">
+            <div class="tool-section">
+                <h3 style="margin-bottom: 1%;">🔎 Email Verification Tool</h3>
+                <input type="email" class="tool-input" id="emailInput" placeholder="Enter recruiter's email address">
+                <button class="btn" onclick="verifyEmail()">Verify Email Domain</button>
+                <div id="emailResult" class="result" style="display:none;"></div>
+            </div>
+            
+            <div class="tool-section">
+                <h3 style="margin-bottom: 1%;">🌐 Website Safety Checker</h3>
+                <input type="url" class="tool-input" id="websiteInput" placeholder="Enter company website URL">
+                <button class="btn" onclick="checkWebsite()">Check Website</button>
+                <div id="websiteResult" class="result" style="display:none;"></div>
+            </div>
+            
+            <div class="card">
+                <h3><span class="icon">🔧</span> Essential Verification Tools</h3>
+                <ul>
+                    <li><strong>WHOIS Lookup:</strong> whois.com - Check domain registration date</li>
+                    <li><strong>Scam Database:</strong> Better Business Bureau (bbb.org/scamtracker)</li>
+                    <li><strong>Email Verification:</strong> hunter.io - Verify email patterns</li>
+                    <li><strong>Company Research:</strong> OpenCorporates.com - Business registration</li>
+                    <li><strong>SSL Check:</strong> ssllabs.com - Website security verification</li>
+                    <li><strong>Reverse Image:</strong> Google Image Search - Check if profile pic is stolen</li>
+                    <li><strong>Phone Lookup:</strong> TrueCaller - Identify spam numbers</li>
+                    <li><strong>URL Scanner:</strong> VirusTotal.com - Check for malicious links</li>
+                </ul>
+            </div>
+            
+            <div class="card safe-practice">
+                <h3><span class="icon">📱</span> AI Detection Tools (2026)</h3>
+                <ul>
+                    <li><strong>Deepfake Detection:</strong> Deepware Scanner - Check video authenticity</li>
+                    <li><strong>AI Text Detection:</strong> GPTZero - Identify AI-written job posts</li>
+                    <li><strong>Voice Analysis:</strong> Pindrop - Verify voice authenticity in calls</li>
+                    <li><strong>Metadata Checker:</strong> Jeffrey's Image Metadata Viewer</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="checklist" class="content">
+            <div class="checklist">
+                <h3 style="margin-bottom: 1.5%;">✓ Pre-Application Checklist</h3>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>Company has professional website with working contact info</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>Job posting is on company's official careers page</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>Company has social media presence with regular activity</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>Salary range is realistic for the role</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>No upfront payment required</label>
+                </div>
+            </div>
+            
+            <div class="checklist">
+                <h3 style="margin-bottom: 1.5%;">✓ Interview Phase Checklist</h3>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>Recruiter's email domain matches company website</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>Verified recruiter on LinkedIn with real connections</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>Had video interview (not just text/email)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>Questions were specific to role, not generic</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>No pressure tactics or artificial urgency</label>
+                </div>
+            </div>
+            
+            <div class="checklist">
+                <h3 style="margin-bottom: 1.5%;">✓ Before Accepting Offer</h3>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>Received written offer letter with all terms</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>Payment method is secure (escrow/platform/direct deposit)</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>No equipment purchase required from me</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>Contract reviewed and understood completely</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>Verified company exists through multiple sources</label>
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox" class="checkbox">
+                    <label>Spoke with actual team members (not just recruiter)</label>
+                </div>
+            </div>
+            
+            <div class="card" style="margin-top: 2%;">
+                <h3><span class="icon">📞</span> Report Scams Here</h3>
+                <ul>
+                    <li><strong>FTC:</strong> reportfraud.ftc.gov</li>
+                    <li><strong>FBI IC3:</strong> ic3.gov</li>
+                    <li><strong>Platform Support:</strong> Report on Upwork, Fiverr, LinkedIn</li>
+                    <li><strong>Local Police:</strong> File report for identity theft</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>🛡️ ScamGuard 2026 | Protect yourself, verify everything, trust your instincts</p>
+            <p style="margin-top: 1%;">Stay safe out there, Tech VA! 💙</p>
+        </div>
+    </div>
+    
+    <script>
+        function showTab(tabName) {
+            const contents = document.querySelectorAll('.content');
+            const tabs = document.querySelectorAll('.tab');
+            
+            contents.forEach(content => content.classList.remove('active'));
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function verifyEmail() {
+            const email = document.getElementById('emailInput').value;
+            const result = document.getElementById('emailResult');
+            
+            if (!email) {
+                result.innerHTML = '⚠️ Please enter an email address';
+                result.style.display = 'block';
+                return;
+            }
+            
+            const domain = email.split('@')[1];
+            const commonScamDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com'];
+            
+            if (commonScamDomains.includes(domain)) {
+                result.innerHTML = `🚩 <strong>WARNING:</strong> Free email domain detected (${domain}). Legitimate companies use corporate email addresses. Verify this recruiter through other channels!`;
+                result.style.background = '#fff3cd';
+            } else {
+                result.innerHTML = `✅ Corporate domain detected (${domain}). Additional verification recommended:<br><br>
+                • Visit ${domain} to confirm it's the real company website<br>
+                • Use WHOIS lookup to check domain registration date<br>
+                • Call company's main number to verify recruiter`;
+                result.style.background = '#d4edda';
+            }
+            
+            result.style.display = 'block';
+        }
+        
+        function checkWebsite() {
+            const url = document.getElementById('websiteInput').value;
+            const result = document.getElementById('websiteResult');
+            
+            if (!url) {
+                result.innerHTML = '⚠️ Please enter a website URL';
+                result.style.display = 'block';
+                return;
+            }
+            
+            const hasHttps = url.startsWith('https://');
+            
+            result.innerHTML = `
+                <strong>Quick Check Results:</strong><br><br>
+                ${hasHttps ? '✅' : '🚩'} HTTPS: ${hasHttps ? 'Secure (SSL enabled)' : 'NOT SECURE - Major red flag!'}<br><br>
+                <strong>Next steps:</strong><br>
+                • Check domain age at whois.com (new = suspicious)<br>
+                • Scan URL at virustotal.com<br>
+                • Verify SSL certificate details in browser<br>
+                • Google the company name + "scam"<br>
+                • Check company reviews on Glassdoor/Indeed
+            `;
+            
+            result.style.background = hasHttps ? '#d4edda' : '#fff3cd';
+            result.style.display = 'block';
+        }
+        
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.card, .checklist');
+            
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchTerm) || searchTerm === '') {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
